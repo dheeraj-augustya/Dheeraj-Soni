@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#07070B" />
+      <stop offset="100%" stop-color="#0E0E14" />
+    </linearGradient>
+    <linearGradient id="accent" x1="120" y1="120" x2="1080" y2="510" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7C5CFF" />
+      <stop offset="100%" stop-color="#22D3EE" />
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 150) rotate(135) scale(420)">
+      <stop offset="0%" stop-color="#7C5CFF" stop-opacity="0.32" />
+      <stop offset="100%" stop-color="#7C5CFF" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(260 520) rotate(45) scale(380)">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#22D3EE" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow1)" />
+  <rect width="1200" height="630" fill="url(#glow2)" />
+  <rect x="48" y="48" width="1104" height="534" rx="28" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" />
+  <rect x="96" y="102" width="72" height="72" rx="18" fill="#11111A" stroke="url(#accent)" stroke-width="2" />
+  <text x="132" y="149" text-anchor="middle" fill="#F4F4F8" font-family="sans-serif" font-size="30" font-weight="700">DS</text>
+  <text x="96" y="255" fill="#A1A1B5" font-family="sans-serif" font-size="24" font-weight="500" letter-spacing="1.5">Full Stack Developer · .NET · Angular · Next.js</text>
+  <text x="96" y="346" fill="#F4F4F8" font-family="sans-serif" font-size="84" font-weight="700" letter-spacing="-2">Dheeraj Soni</text>
+  <text x="96" y="420" fill="#A1A1B5" font-family="sans-serif" font-size="28" font-weight="400">End-to-end web engineering from secure .NET APIs to polished interfaces.</text>
+  <line x1="96" y1="486" x2="1104" y2="486" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+  <text x="96" y="534" fill="#22D3EE" font-family="sans-serif" font-size="22" font-weight="500">dheerajsoni.dev@gmail.com</text>
+  <text x="1104" y="534" text-anchor="end" fill="#A1A1B5" font-family="sans-serif" font-size="22" font-weight="500">Prayagraj, India</text>
+</svg>

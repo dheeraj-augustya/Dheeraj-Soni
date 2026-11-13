@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Dheeraj Soni — Full Stack Developer (.NET · Angular · Next.js)</title>
+    <meta
+      name="description"
+      content="Portfolio of Dheeraj Soni, a Full Stack Developer in India engineering scalable web applications with .NET Web API, Angular, Next.js, and WordPress."
+    />
+    <meta name="author" content="Dheeraj Soni" />
+    <meta name="theme-color" content="#07070B" />
+    <link rel="canonical" href="https://dheerajsoni.vercel.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dheeraj Soni Portfolio" />
+    <meta property="og:title" content="Dheeraj Soni — Full Stack Developer (.NET · Angular · Next.js)" />
+    <meta
+      property="og:description"
+      content="Portfolio of Dheeraj Soni, engineering fast, scalable web applications end to end from secure .NET APIs to polished Angular and Next.js interfaces."
+    />
+    <meta property="og:url" content="https://dheerajsoni.vercel.app/" />
+    <meta property="og:image" content="/assets/og-image.svg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dheeraj Soni — Full Stack Developer (.NET · Angular · Next.js)" />
+    <meta
+      name="twitter:description"
+      content="End-to-end web engineering with .NET Web API, Angular, Next.js, and WordPress."
+    />
+    <meta name="twitter:image" content="/assets/og-image.svg" />
+
+    <!-- Favicon (inline SVG + asset fallback) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='64' y2='64' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%237C5CFF'/%3E%3Cstop offset='100%25' stop-color='%2322D3EE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2307070B'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Ctext x='32' y='42' text-anchor='middle' fill='%23F4F4F8' font-family='sans-serif' font-size='26' font-weight='700'%3EDS%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="alternate icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+    <!-- Fonts: Maximum 2 families (Syne for editorial display + Inter for clean body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
+    />
+
+    <!-- Prevent theme flash before first paint -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('ds-theme');
+          var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+          var metaTheme = document.querySelector('meta[name="theme-color"]');
+          if (metaTheme) {
+            metaTheme.setAttribute('content', theme === 'light' ? '#F6F7FB' : '#07070B');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Structured Data (JSON-LD Person Schema) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dheeraj Soni",
+        "jobTitle": "Full Stack Developer",
+        "description": "Full Stack Developer specializing in .NET Web API, Angular, Next.js, and WordPress.",
+        "url": "https://dheerajsoni.vercel.app/",
+        "email": "mailto:dheerajsoni.dev@gmail.com",
+        "telephone": "+916394252736",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Prayagraj",
+          "addressRegion": "Uttar Pradesh",
+          "addressCountry": "IN"
+        },
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow"
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Awadhesh Pratap Singh University, Rewa"
+          }
+        ],
+        "knowsLanguage": ["Hindi", "English"],
+        "sameAs": [
+          "https://github.com/dheeraj-augustya",
+          "https://www.linkedin.com/in/dheeraj-soni-india/"
+        ]
+      }
+    </script>
+
+    <!-- Import Map for pinned Three.js ES module (used lazily in hero only) -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+      }
+    </script>
+
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Pinned GSAP + ScrollTrigger (deferred so paint is never blocked) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  </head>
+  <body>
+    <!-- Skip Link for Keyboard / Screen Reader Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Subtle Film Grain Overlay -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <!-- Animated Monogram Preloader (under 1.2s, bypassed when reduced-motion is set) -->
+    <div id="preloader" class="preloader" aria-hidden="true">
+      <div class="preloader-inner">
+        <svg class="preloader-svg" viewBox="0 0 120 72" width="120" height="72" fill="none">
+          <defs>
+            <linearGradient id="preloaderGrad" x1="0" y1="0" x2="120" y2="72" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#7C5CFF" />
+              <stop offset="100%" stop-color="#22D3EE" />
+            </linearGradient>
+          </defs>
+          <path
+            class="monogram-stroke"
+            d="M16 58V14H33C46 14 54 22.5 54 36C54 49.5 46 58 33 58H16Z"
+            stroke="#F4F4F8"
+            stroke-width="4.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            class="monogram-stroke monogram-stroke-delay"
+            d="M98 21C94.5 16.5 89 14 82 14C71.5 14 65 20 65 27.5C65 35.5 72 38 82.5 40.5C93.5 43 100 45.5 100 53.5C100 61.5 92.5 66 81.5 66C73 66 66.5 63 62 58"
+            stroke="url(#preloaderGrad)"
+            stroke-width="4.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Custom Desktop Pointer Cursor (hidden on touch/coarse pointers) -->
+    <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
+
+    <!-- Desktop / Tablet Floating Glass Pill Navbar -->
+    <header class="desktop-nav-wrap" aria-label="Primary navigation">
+      <nav class="desktop-nav glass-pill">
+        <a href="#hero" class="nav-brand" aria-label="Dheeraj Soni Home">
+          <span class="brand-monogram">DS</span>
+        </a>
+
+        <ul class="nav-links" role="list">
+          <li><a href="#about" class="nav-link" data-spy="about">About</a></li>
+          <li><a href="#skills" class="nav-link" data-spy="skills">Skills</a></li>
+          <li><a href="#projects" class="nav-link" data-spy="projects">Projects</a></li>
+          <li><a href="#experience" class="nav-link" data-spy="experience">Experience</a></li>
+          <li><a href="#contact" class="nav-link" data-spy="contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button
+            type="button"
+            class="theme-toggle-btn"
+            data-theme-toggle
+            aria-label="Toggle color theme"
+            aria-pressed="false"
+            title="Switch Light / Dark theme"
+          >
+            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <a href="#contact" class="nav-cta magnetic-btn">
+            <span>Hire me</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Top Minimal Controls (Brand + Theme Toggle only; main nav is the native bottom tab bar) -->
+    <div class="mobile-top-bar">
+      <a href="#hero" class="mobile-brand glass-chip" aria-label="Dheeraj Soni Home">DS</a>
+      <button
+        type="button"
+        class="theme-toggle-btn glass-chip"
+        data-theme-toggle
+        aria-label="Toggle color theme"
+        aria-pressed="false"
+      >
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+      <!-- 1) HERO SECTION -->
+      <section id="hero" class="hero-section" aria-label="Introduction">
+        <div class="hero-bg-stage" aria-hidden="true">
+          <!-- Pure-CSS animated gradient orb fallback (shown when WebGL unavailable or reduced-motion) -->
+          <div id="hero-fallback-orb" class="hero-fallback-orb"></div>
+          <!-- Dedicated lightweight Three.js canvas -->
+          <div id="hero-canvas-wrap" class="hero-canvas-wrap"></div>
+          <div class="hero-vignette"></div>
+        </div>
+
+        <div class="container hero-container">
+          <div class="hero-content">
+            <p class="hero-kicker reveal-hero">
+              Full Stack Developer · .NET · Angular · Next.js
+            </p>
+
+            <h1 class="hero-title split-reveal">Dheeraj Soni</h1>
+
+            <div class="hero-role-row reveal-hero" aria-live="polite">
+              <span class="role-prefix">Role</span>
+              <span aria-hidden="true" class="role-sep">/</span>
+              <span id="rotating-role" class="rotating-role">Full Stack Developer</span>
+            </div>
+
+            <p class="hero-tagline reveal-hero">
+              I engineer fast, scalable web applications end to end, from secure .NET APIs to polished Angular and Next.js interfaces.
+            </p>
+
+            <div class="hero-actions reveal-hero">
+              <a href="#projects" class="btn btn-primary magnetic-btn">
+                <span>View Projects</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+
+              <a
+                href="/assets/Dheeraj_Soni_Resume.pdf"
+                download="Dheeraj_Soni_Resume.pdf"
+                class="btn btn-glass magnetic-btn"
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download Resume</span>
+              </a>
+
+              <a href="#contact" class="btn btn-outline magnetic-btn">
+                <span>Contact Me</span>
+              </a>
+            </div>
+
+            <div class="hero-socials reveal-hero" aria-label="Social links">
+              <a
+                href="https://github.com/dheeraj-augustya"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon-link"
+                aria-label="Dheeraj Soni on GitHub"
+              >
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
+                </svg>
+                <span>GitHub</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/dheeraj-soni-india/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon-link"
+                aria-label="Dheeraj Soni on LinkedIn"
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+
+              <a
+                href="mailto:dheerajsoni.dev@gmail.com"
+                class="social-icon-link"
+                aria-label="Email Dheeraj Soni"
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                <span>Email</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a href="#about" class="scroll-indicator" aria-label="Scroll to About section">
+          <span class="scroll-line"></span>
+          <span class="scroll-text">Scroll</span>
+        </a>
+      </section>
+
+      <!-- 2) ABOUT SECTION -->
+      <section id="about" class="section" aria-labelledby="about-heading">
+        <div class="container">
+          <div class="section-header fade-up">
+            <p class="section-eyebrow">01 · About</p>
+            <h2 id="about-heading" class="section-title split-reveal">
+              Engineering complete web products from API architecture to UI craft.
+            </h2>
+          </div>
+
+          <div class="about-grid">
+            <!-- Profile Image Frame (Trivial to swap src to /assets/profile.jpg; DS monogram sits cleanly as fallback) -->
+            <div class="about-portrait-col fade-up">
+              <div class="portrait-frame glass-card">
+                <div class="portrait-inner">
+                  <!-- DS Monogram SVG placeholder (visible if portrait image is removed or fails to load) -->
+                  <div class="portrait-monogram-fallback" aria-hidden="true">
+                    <svg viewBox="0 0 160 160" width="112" height="112" fill="none">
+                      <defs>
+                        <linearGradient id="dsAboutGrad" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#7C5CFF" />
+                          <stop offset="100%" stop-color="#22D3EE" />
+                        </linearGradient>
+                      </defs>
+                      <circle cx="80" cy="80" r="74" stroke="url(#dsAboutGrad)" stroke-width="1.5" stroke-opacity="0.5" />
+                      <text x="80" y="96" text-anchor="middle" fill="currentColor" font-family="Syne, sans-serif" font-size="48" font-weight="800">DS</text>
+                    </svg>
+                  </div>
+                  <!-- To swap with your own photo, replace src below with "/assets/profile.jpg" -->
+                  <img
+                    src="/assets/aistudio/afa47a7e-6183-4159-9138-144eef7c0008_6a1a2652.png"
+                    alt="Dheeraj Soni — Full Stack Developer"
+                    class="portrait-img"
+                    loading="lazy"
+                    decoding="async"
+                    onerror="this.style.display='none'"
+                  />
+                </div>
+                <div class="portrait-caption">
+                  <span class="portrait-name">Dheeraj Soni</span>
+                  <span class="portrait-meta">Prayagraj, Uttar Pradesh · Hindi &amp; English</span>
+                </div>
+              </div>
+
+              <!-- Recognition Highlight Card -->
+              <article class="award-card glass-card fade-up">
+                <div class="award-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="6"></circle>
+                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                  </svg>
+                </div>
+                <div class="award-body">
+                  <p class="award-kicker">Recognition</p>
+                  <h3 class="award-title">Excellence through Innovation</h3>
+                  <p class="award-desc">
+                    Awarded for contributing to a Cyber Security Awareness Program conducted with AKTU and UP Police.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <!-- Story & Factual Stats -->
+            <div class="about-story-col fade-up">
+              <div class="about-prose">
+                <p>
+                  Dheeraj Soni is a Full Stack Developer from Prayagraj, Uttar Pradesh, who builds complete web products using <strong>.NET Web API</strong> on the backend, <strong>Next.js</strong> for customer-facing frontends, and <strong>Angular</strong> for admin panels, alongside delivering many WordPress websites.
+                </p>
+                <p>
+                  He began his career at Questech as a trainer in Full Stack Java, web development, and the MERN stack—sharpening his ability to communicate complex technical concepts clearly. He then moved into building real-world business applications at BTJ Alpha Technology and Glidedmatrix Technologies, including a Government of Chhattisgarh project.
+                </p>
+                <p>
+                  He holds a B.Tech in Computer Science from Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow, speaks Hindi and English, and is open to new opportunities and collaborations.
+                </p>
+              </div>
+
+              <div class="stats-grid" aria-label="Career summary">
+                <div class="stat-card glass-card">
+                  <div class="stat-value tabular-nums" data-counter="3">3</div>
+                  <div class="stat-label">Companies</div>
+                  <div class="stat-sub">Questech · BTJ Alpha · Glidedmatrix</div>
+                </div>
+
+                <div class="stat-card glass-card">
+                  <div class="stat-value tabular-nums" data-counter="7">7</div>
+                  <div class="stat-label">Major Applications</div>
+                  <div class="stat-sub">Enterprise, CRM, Marketplace &amp; GovTech</div>
+                </div>
+
+                <div class="stat-card glass-card">
+                  <div class="stat-value tabular-nums" data-counter="3">3</div>
+                  <div class="stat-label">Core Stacks</div>
+                  <div class="stat-sub">.NET · Angular / Next.js · WordPress</div>
+                </div>
+
+                <div class="stat-card glass-card">
+                  <div class="stat-value">Many</div>
+                  <div class="stat-label">WordPress Websites</div>
+                  <div class="stat-sub">Custom themes, WooCommerce &amp; SEO</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3) SKILLS SECTION -->
+      <section id="skills" class="section" aria-labelledby="skills-heading">
+        <div class="container">
+          <div class="section-header fade-up">
+            <p class="section-eyebrow">02 · Capabilities</p>
+            <h2 id="skills-heading" class="section-title split-reveal">
+              Technical stack across backend APIs, frontends, and CMS delivery.
+            </h2>
+          </div>
+
+          <div id="skills-grid" class="skills-grid"></div>
+        </div>
+
+        <!-- Tech Marquee Strip (pauses / stays static under prefers-reduced-motion) -->
+        <div class="marquee-wrap" aria-label="Core technologies marquee">
+          <div id="tech-marquee-track" class="marquee-track"></div>
+        </div>
+      </section>
+
+      <!-- 4) PROJECTS SECTION -->
+      <section id="projects" class="section" aria-labelledby="projects-heading">
+        <div class="container">
+          <div class="projects-top fade-up">
+            <div class="section-header">
+              <p class="section-eyebrow">03 · Selected Work</p>
+              <h2 id="projects-heading" class="section-title split-reveal">
+                Production applications &amp; live client websites.
+              </h2>
+            </div>
+
+            <div class="filter-bar" role="tablist" aria-label="Filter projects by stack">
+              <button type="button" class="filter-tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="dotnet">.NET</button>
+              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="next-angular">Next.js + Angular</button>
+              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="wordpress">WordPress</button>
+            </div>
+          </div>
+
+          <div id="projects-grid" class="projects-grid"></div>
+
+          <!-- Early Academic Projects Subsection -->
+          <div class="academic-block fade-up">
+            <h3 class="academic-heading">Early Academic Projects</h3>
+            <div id="academic-grid" class="academic-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5) EXPERIENCE & 6) EDUCATION / CERTIFICATIONS SECTION -->
+      <section id="experience" class="section" aria-labelledby="experience-heading">
+        <div class="container">
+          <div class="section-header fade-up">
+            <p class="section-eyebrow">04 · Career &amp; Credentials</p>
+            <h2 id="experience-heading" class="section-title split-reveal">
+              Experience, education, and certifications.
+            </h2>
+          </div>
+
+          <div class="career-layout">
+            <!-- Experience Vertical Timeline -->
+            <div class="timeline-col">
+              <h3 class="subsection-title fade-up">Work Experience</h3>
+              <div id="experience-timeline" class="timeline-list"></div>
+            </div>
+
+            <!-- Education, Certifications & Languages -->
+            <div class="credentials-col">
+              <h3 class="subsection-title fade-up">Education</h3>
+              <div id="education-list" class="education-list"></div>
+
+              <h3 class="subsection-title fade-up">Certifications</h3>
+              <ul id="certifications-list" class="chips-list fade-up" role="list"></ul>
+
+              <h3 class="subsection-title fade-up">Languages</h3>
+              <ul id="languages-list" class="chips-list fade-up" role="list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7) CONTACT SECTION -->
+      <section id="contact" class="section contact-section" aria-labelledby="contact-heading">
+        <div class="container">
+          <div class="contact-header fade-up">
+            <p class="section-eyebrow">05 · Contact</p>
+            <h2 id="contact-heading" class="contact-headline split-reveal">
+              Let's build something remarkable.
+            </h2>
+            <p class="contact-sub">
+              Available for full-stack roles, product engineering, and custom web collaborations.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <!-- Direct Contact Cards -->
+            <div class="contact-cards fade-up">
+              <a href="mailto:dheerajsoni.dev@gmail.com" class="contact-card glass-card">
+                <span class="contact-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-card-label">Email</span>
+                  <span class="contact-card-value">dheerajsoni.dev@gmail.com</span>
+                </div>
+              </a>
+
+              <a href="tel:+916394252736" class="contact-card glass-card">
+                <span class="contact-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-card-label">Phone</span>
+                  <span class="contact-card-value tabular-nums">+91 6394252736</span>
+                </div>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/dheeraj-soni-india/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-card glass-card"
+              >
+                <span class="contact-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-card-label">LinkedIn</span>
+                  <span class="contact-card-value">linkedin.com/in/dheeraj-soni-india</span>
+                </div>
+              </a>
+
+              <a
+                href="https://github.com/dheeraj-augustya"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-card glass-card"
+              >
+                <span class="contact-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-card-label">GitHub</span>
+                  <span class="contact-card-value">github.com/dheeraj-augustya</span>
+                </div>
+              </a>
+
+              <div class="contact-card glass-card">
+                <span class="contact-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </span>
+                <div>
+                  <span class="contact-card-label">Location</span>
+                  <span class="contact-card-value">Prayagraj, Uttar Pradesh, India</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Form -->
+            <form id="contact-form" class="contact-form glass-card fade-up" novalidate>
+              <div class="form-field">
+                <label for="contact-name" class="form-label">Your Name</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  placeholder="Enter your name"
+                  class="form-input"
+                />
+                <span class="form-error" id="error-name" aria-live="polite"></span>
+              </div>
+
+              <div class="form-field">
+                <label for="contact-email" class="form-label">Email Address</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  placeholder="you@company.com"
+                  class="form-input"
+                />
+                <span class="form-error" id="error-email" aria-live="polite"></span>
+              </div>
+
+              <div class="form-field">
+                <label for="contact-message" class="form-label">Message</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder="Tell me about your project, role, or timeline..."
+                  class="form-input form-textarea"
+                ></textarea>
+                <span class="form-error" id="error-message" aria-live="polite"></span>
+              </div>
+
+              <button type="submit" id="contact-submit" class="btn btn-primary btn-full magnetic-btn">
+                <span>Send Message</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+
+              <div id="contact-status" class="form-status" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="footer-copy">
+          &copy; <span id="footer-year">2026</span> Dheeraj Soni. Crafted in Prayagraj, India.
+        </p>
+
+        <button type="button" id="back-to-top" class="back-to-top-btn" aria-label="Back to top">
+          <span>Back to top</span>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5M5 12l7-7 7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </footer>
+
+    <!-- Mobile Fixed Bottom Tab Bar (< 768px) -->
+    <nav class="mobile-tab-bar" aria-label="Mobile navigation">
+      <div class="mobile-tab-track">
+        <div id="mobile-tab-indicator" class="mobile-tab-indicator" aria-hidden="true"></div>
+        <a href="#hero" class="mobile-tab is-active" data-tab-index="0" data-spy-mobile="hero">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="#skills" class="mobile-tab" data-tab-index="1" data-spy-mobile="skills">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span>Skills</span>
+        </a>
+        <a href="#projects" class="mobile-tab" data-tab-index="2" data-spy-mobile="projects">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+            <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+            <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+            <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+          </svg>
+          <span>Projects</span>
+        </a>
+        <a href="#experience" class="mobile-tab" data-tab-index="3" data-spy-mobile="experience">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span>Experience</span>
+        </a>
+        <a href="#contact" class="mobile-tab" data-tab-index="4" data-spy-mobile="contact">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Contact</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Project Detail Modal -->
+    <div
+      id="project-modal"
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      hidden
+    >
+      <div class="modal-dialog glass-card">
+        <div class="modal-header">
+          <div>
+            <p id="modal-category" class="modal-kicker"></p>
+            <h3 id="modal-title" class="modal-title"></h3>
+          </div>
+          <button type="button" id="modal-close" class="modal-close-btn" aria-label="Close project details">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="modal-cover" class="modal-cover" aria-hidden="true"></div>
+
+        <div class="modal-body">
+          <div class="modal-section">
+            <h4 class="modal-label">Overview</h4>
+            <p id="modal-overview" class="modal-text"></p>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-label">Tech Stack</h4>
+            <div id="modal-stack" class="modal-stack-list"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4 class="modal-label">My Role</h4>
+            <p id="modal-role" class="modal-text"></p>
+          </div>
+        </div>
+
+        <div id="modal-footer" class="modal-footer"></div>
+      </div>
+    </div>
+
+    <!-- AI Chatbot Floating Button & Glass Chat Window -->
+    <div class="chat-widget" id="chat-widget">
+      <button
+        type="button"
+        id="chat-fab"
+        class="chat-fab"
+        aria-label="Open Ask Dheeraj's AI chat"
+        aria-expanded="false"
+        aria-controls="chat-window"
+      >
+        <span class="chat-unread-dot" id="chat-unread-dot" aria-hidden="true"></span>
+        <svg class="chat-fab-icon-open" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <svg class="chat-fab-icon-close" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <section
+        id="chat-window"
+        class="chat-window glass-card"
+        role="dialog"
+        aria-label="Ask Dheeraj's AI"
+        hidden
+      >
+        <header class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-avatar" aria-hidden="true">DS</div>
+            <div>
+              <h2 class="chat-title">Ask Dheeraj's AI</h2>
+              <p class="chat-status">
+                <span class="chat-online-dot" aria-hidden="true"></span>
+                <span>Online · EN / HI / Hinglish</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="chat-header-actions">
+            <button type="button" id="chat-clear" class="chat-icon-btn" aria-label="Clear chat history" title="Clear chat">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+            </button>
+            <button type="button" id="chat-close" class="chat-icon-btn" aria-label="Close chat" title="Close chat">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+
+        <div id="chat-quick-questions" class="chat-quick-questions" aria-label="Suggested questions"></div>
+
+        <form id="chat-form" class="chat-input-area">
+          <textarea
+            id="chat-input"
+            class="chat-input"
+            rows="1"
+            maxlength="1000"
+            placeholder="Ask about skills, projects, or hiring..."
+            aria-label="Type your message"
+          ></textarea>
+          <button type="submit" id="chat-send" class="chat-send-btn" aria-label="Send message">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <!-- Deferred ES Modules -->
+    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/js/chat.js"></script>
+  </body>
+</html>
