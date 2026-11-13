@@ -330,9 +330,20 @@ const prefersReducedMotion = () =>
 const isFinePointerDesktop = () =>
   window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+function padTwo(num) {
+  return String(num).padStart(2, '0');
+}
+
+/**
+ * Formats numbers inside date strings with consistent .numeral styling.
+ */
+function formatDateNumerals(text) {
+  return String(text).replace(/\d+/g, (match) => `<span class="numeral inline-numeral">${match}</span>`);
+}
+
 function createSvgPattern(index) {
   const shapes = [
-    `<svg class="project-cover-svg" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7C5CFF" stop-opacity="0.45"/><stop offset="100%" stop-color="#22D3EE" stop-opacity="0.2"/></linearGradient></defs><circle cx="310" cy="48" r="90" stroke="url(#pg1)" stroke-width="1.2" fill="none"/><circle cx="310" cy="48" r="56" stroke="#22D3EE" stroke-opacity="0.22" stroke-width="1" fill="none"/><path d="M0 160 Q140 90 280 140 T400 95" stroke="url(#pg1)" stroke-width="1.4" fill="none"/></svg>`,
+    `<svg class="project-cover-svg" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.45"/><stop offset="100%" stop-color="#22D3EE" stop-opacity="0.2"/></linearGradient></defs><circle cx="310" cy="48" r="90" stroke="url(#pg1)" stroke-width="1.2" fill="none"/><circle cx="310" cy="48" r="56" stroke="#22D3EE" stroke-opacity="0.22" stroke-width="1" fill="none"/><path d="M0 160 Q140 90 280 140 T400 95" stroke="url(#pg1)" stroke-width="1.4" fill="none"/></svg>`,
     `<svg class="project-cover-svg" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true"><g stroke="#ffffff" stroke-opacity="0.12" fill="none"><rect x="40" y="28" width="120" height="120" rx="24" transform="rotate(14 100 88)"/><rect x="230" y="42" width="110" height="110" rx="22" transform="rotate(-12 285 97)"/><line x1="0" y1="140" x2="400" y2="60"/></g></svg>`,
     `<svg class="project-cover-svg" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true"><g stroke="#22D3EE" stroke-opacity="0.24" fill="none"><polygon points="200,22 330,100 200,178 70,100"/><polygon points="200,48 286,100 200,152 114,100"/><line x1="70" y1="100" x2="330" y2="100"/></g></svg>`,
   ];
@@ -347,12 +358,15 @@ function renderSkills() {
   const grid = document.getElementById('skills-grid');
   if (grid) {
     grid.innerHTML = SKILLS.map(
-      (group) => `
+      (group, idx) => `
       <article class="skill-card glass-card fade-up">
         <div class="skill-card-head">
           <div class="skill-card-title-wrap">
             <div class="skill-icon" aria-hidden="true">${group.icon}</div>
-            <h3 class="skill-group-title">${group.group}</h3>
+            <div>
+              <span class="numeral card-index">${padTwo(idx + 1)}</span>
+              <h3 class="skill-group-title">${group.group}</h3>
+            </div>
           </div>
           <span class="skill-level-badge">${group.level}</span>
         </div>
@@ -390,6 +404,17 @@ function renderSkills() {
   }
 }
 
+function updateFilterCounts() {
+  document.querySelectorAll('[data-filter-count]').forEach((el) => {
+    const key = el.dataset.filterCount;
+    const count =
+      key === 'all'
+        ? PROJECTS.length
+        : PROJECTS.filter((p) => p.categories.includes(key)).length;
+    el.textContent = padTwo(count);
+  });
+}
+
 function renderProjects(filter = 'all') {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
@@ -401,6 +426,7 @@ function renderProjects(filter = 'all') {
 
   grid.innerHTML = filtered
     .map((project, index) => {
+      const globalIndex = PROJECTS.indexOf(project) + 1;
       const visitButton = project.url
         ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" class="project-btn project-btn-primary">
             <span>Visit site</span>
@@ -414,6 +440,7 @@ function renderProjects(filter = 'all') {
       <article class="project-card glass-card fade-up" data-project-id="${project.id}">
         <div class="project-cover ${project.coverTheme}">
           ${createSvgPattern(index)}
+          <span class="project-cover-index numeral">${padTwo(globalIndex)}</span>
           <span class="project-cover-label">${project.coverTag}</span>
         </div>
         <div class="project-body">
@@ -441,9 +468,12 @@ function renderAcademicProjects() {
   const grid = document.getElementById('academic-grid');
   if (!grid) return;
   grid.innerHTML = ACADEMIC_PROJECTS.map(
-    (item) => `
+    (item, idx) => `
     <article class="academic-card glass-card">
-      <p class="academic-meta">${item.period} · ${item.stack}</p>
+      <div class="academic-top-row">
+        <span class="numeral card-index">${padTwo(idx + 1)}</span>
+        <p class="academic-meta">${formatDateNumerals(item.period)} · ${item.stack}</p>
+      </div>
       <h4 class="academic-title">${item.title}</h4>
       <p class="academic-desc">${item.summary}</p>
     </article>
@@ -455,10 +485,13 @@ function renderCareer() {
   const expEl = document.getElementById('experience-timeline');
   if (expEl) {
     expEl.innerHTML = EXPERIENCE.map(
-      (item) => `
+      (item, idx) => `
       <article class="timeline-item glass-card fade-up">
         <span class="timeline-node" aria-hidden="true"></span>
-        <p class="timeline-period tabular-nums">${item.period}</p>
+        <div class="timeline-top-row">
+          <p class="timeline-period">${formatDateNumerals(item.period)}</p>
+          <span class="numeral card-index">${padTwo(idx + 1)}</span>
+        </div>
         <h4 class="timeline-role">${item.role}</h4>
         <p class="timeline-company">${item.company}</p>
         <p class="timeline-summary">${item.summary}</p>
@@ -470,9 +503,12 @@ function renderCareer() {
   const eduEl = document.getElementById('education-list');
   if (eduEl) {
     eduEl.innerHTML = EDUCATION.map(
-      (edu) => `
+      (edu, idx) => `
       <article class="edu-card glass-card fade-up">
-        <p class="edu-period tabular-nums">${edu.period}</p>
+        <div class="timeline-top-row">
+          <p class="edu-period">${formatDateNumerals(edu.period)}</p>
+          <span class="numeral card-index">${padTwo(idx + 1)}</span>
+        </div>
         <h4 class="edu-degree">${edu.degree}</h4>
         <p class="edu-school">${edu.institution}</p>
       </article>
@@ -500,6 +536,7 @@ function renderCareer() {
    ========================================================================== */
 
 function initProjectFilters() {
+  updateFilterCounts();
   const tabs = document.querySelectorAll('.filter-tab');
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -539,7 +576,8 @@ function openProjectModal(projectId) {
   const modal = document.getElementById('project-modal');
   if (!project || !modal) return;
 
-  document.getElementById('modal-category').textContent = `${project.company} · ${project.coverTag}`;
+  const indexNum = padTwo(PROJECTS.indexOf(project) + 1);
+  document.getElementById('modal-category').innerHTML = `<span class="numeral inline-numeral">${indexNum}</span> · ${project.company} · ${project.coverTag}`;
   document.getElementById('modal-title').textContent = project.title;
   document.getElementById('modal-overview').textContent = project.overview;
   document.getElementById('modal-role').textContent = project.role;
@@ -625,8 +663,8 @@ function initPreloader() {
     preloader.classList.add('is-leaving');
     window.setTimeout(() => {
       preloader.classList.add('is-done');
-    }, 440);
-  }, 700);
+    }, 420);
+  }, 780);
 }
 
 function initThemeToggle() {
@@ -638,7 +676,7 @@ function initThemeToggle() {
     const isLight = theme === 'light';
     buttons.forEach((btn) => btn.setAttribute('aria-pressed', String(isLight)));
     if (metaTheme) {
-      metaTheme.setAttribute('content', isLight ? '#F5F6FA' : '#07070B');
+      metaTheme.setAttribute('content', isLight ? '#F5F5F9' : '#07070B');
     }
   };
 
@@ -843,43 +881,68 @@ function initLazyThreeHero() {
   }
 }
 
-function initAnimations() {
-  if (prefersReducedMotion()) return;
+function formatCounterValue(value, padWidth) {
+  return padWidth > 0 ? String(value).padStart(padWidth, '0') : String(value);
+}
 
-  // Stat counters
+function initStatCounters() {
   const counters = document.querySelectorAll('[data-counter]');
+  if (!counters.length) return;
+
+  // Show final value immediately for reduced-motion preference
+  if (prefersReducedMotion()) {
+    counters.forEach((el) => {
+      const target = Number(el.dataset.counter || 0);
+      const pad = Number(el.dataset.pad || 0);
+      el.textContent = formatCounterValue(target, pad);
+    });
+    return;
+  }
+
   const counterObserver = new IntersectionObserver(
     (entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const target = Number(el.dataset.counter || 0);
+        const pad = Number(el.dataset.pad || 0);
         if (!target) return;
-        let current = 0;
-        const stepTime = 48;
-        const totalSteps = 14;
-        const increment = target / totalSteps;
-        const timer = window.setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            el.textContent = String(target);
-            window.clearInterval(timer);
+
+        const duration = 680;
+        const startTime = performance.now();
+
+        function step(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(eased * target);
+          el.textContent = formatCounterValue(current, pad);
+          if (progress < 1) {
+            requestAnimationFrame(step);
           } else {
-            el.textContent = String(Math.floor(current));
+            el.textContent = formatCounterValue(target, pad);
           }
-        }, stepTime);
+        }
+
+        el.textContent = formatCounterValue(0, pad);
+        requestAnimationFrame(step);
         obs.unobserve(el);
       });
     },
-    { threshold: 0.4 }
+    { threshold: 0.35 }
   );
-  counters.forEach((el) => counterObserver.observe(el));
 
+  counters.forEach((el) => counterObserver.observe(el));
+}
+
+function initAnimations() {
+  initStatCounters();
+
+  if (prefersReducedMotion()) return;
   if (!window.gsap || !window.ScrollTrigger) return;
+
   const { gsap, ScrollTrigger } = window;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero entrance
   gsap.from('.reveal-hero', {
     y: 22,
     opacity: 0,
@@ -889,7 +952,6 @@ function initAnimations() {
     clearProps: 'transform,opacity',
   });
 
-  // Scroll fade-ups
   gsap.utils.toArray('.fade-up').forEach((el) => {
     gsap.from(el, {
       y: 26,
@@ -905,7 +967,6 @@ function initAnimations() {
     });
   });
 
-  // Fallback scroll drift if Three.js initializes after GSAP
   ScrollTrigger.create({
     trigger: '#hero',
     start: 'top top',

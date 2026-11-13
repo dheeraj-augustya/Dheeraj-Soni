@@ -14,7 +14,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Dheeraj Soni Portfolio" />
+    <meta property="og:site_name" content="dheerajsoni" />
     <meta property="og:title" content="Dheeraj Soni — Full Stack Developer (.NET · Angular · Next.js)" />
     <meta
       property="og:description"
@@ -32,23 +32,28 @@
     />
     <meta name="twitter:image" content="/assets/og-image.svg" />
 
-    <!-- Favicon (inline SVG + asset fallback) -->
+    <!-- Favicon (Hexagon negative-space D mark, inline SVG data URI + file fallback) -->
     <link
       rel="icon"
       type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='64' y2='64' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%237C5CFF'/%3E%3Cstop offset='100%25' stop-color='%2322D3EE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2307070B'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Ctext x='32' y='42' text-anchor='middle' fill='%23F4F4F8' font-family='sans-serif' font-size='26' font-weight='700'%3EDS%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='dsg' x1='6' y1='3' x2='42' y2='45' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%238B5CF6'/%3E%3Cstop offset='100%25' stop-color='%235B3DF5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23dsg)' fill-rule='evenodd' d='M21.75 4.8 Q24 3.5 26.25 4.8 L39.5 12.45 Q41.75 13.75 41.75 16.35 L41.75 31.65 Q41.75 34.25 39.5 35.55 L26.25 43.2 Q24 44.5 21.75 43.2 L8.5 35.55 Q6.25 34.25 6.25 31.65 L6.25 16.35 Q6.25 13.75 8.5 12.45 Z M15.2 13.5 H23.2 A10.5 10.5 0 0 1 23.2 34.5 H15.2 Z M19.6 17.8 V30.2 H23.2 A6.2 6.2 0 0 0 23.2 17.8 Z'/%3E%3Cpath d='M22.25 5.65 Q24 4.65 25.75 5.65 L38.65 13.1 Q40.75 14.3 40.75 16.7 L40.75 31.3 Q40.75 33.7 38.65 34.9 L25.75 42.35 Q24 43.35 22.25 42.35 L9.35 34.9 Q7.25 33.7 7.25 31.3 L7.25 16.7 Q7.25 14.3 9.35 13.1 Z' stroke='%23FFFFFF' stroke-opacity='0.18' stroke-width='1'/%3E%3C/svg%3E"
     />
     <link rel="alternate icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
-    <!-- Fonts: Maximum 2 families (Syne for editorial display + Inter for clean body) -->
+    <!-- Fonts: Maximum 2 families (Sora 500/600/700 + Inter 400/500/600) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap"
+    />
+    <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap"
     />
 
-    <!-- Prevent theme flash before first paint -->
+    <!-- Prevent theme flash before first paint (defaults to dark) -->
     <script>
       (function () {
         try {
@@ -57,7 +62,7 @@
           document.documentElement.setAttribute('data-theme', theme);
           var metaTheme = document.querySelector('meta[name="theme-color"]');
           if (metaTheme) {
-            metaTheme.setAttribute('content', theme === 'light' ? '#F6F7FB' : '#07070B');
+            metaTheme.setAttribute('content', theme === 'light' ? '#F5F5F9' : '#07070B');
           }
         } catch (e) {}
       })();
@@ -114,37 +119,91 @@
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   </head>
   <body>
+    <!-- Reusable Inline SVG Brand Symbols (Mark, Monochrome Mark, Full Lockup) -->
+    <svg class="svg-symbols" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="dsg" x1="6" y1="3" x2="42" y2="45" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#8B5CF6" />
+          <stop offset="100%" stop-color="#5B3DF5" />
+        </linearGradient>
+        <linearGradient id="ds-word-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8B5CF6" />
+          <stop offset="65%" stop-color="#5B3DF5" />
+          <stop offset="100%" stop-color="#22D3EE" />
+        </linearGradient>
+      </defs>
+
+      <!-- Variant 1: Brand Mark Only (Negative-space D inside rounded violet hexagon) -->
+      <symbol id="ds-logo-mark" viewBox="0 0 48 48">
+        <path
+          fill="url(#dsg)"
+          fill-rule="evenodd"
+          d="M21.75 4.8 Q24 3.5 26.25 4.8 L39.5 12.45 Q41.75 13.75 41.75 16.35 L41.75 31.65 Q41.75 34.25 39.5 35.55 L26.25 43.2 Q24 44.5 21.75 43.2 L8.5 35.55 Q6.25 34.25 6.25 31.65 L6.25 16.35 Q6.25 13.75 8.5 12.45 Z M15.2 13.5 H23.2 A10.5 10.5 0 0 1 23.2 34.5 H15.2 Z M19.6 17.8 V30.2 H23.2 A6.2 6.2 0 0 0 23.2 17.8 Z"
+        />
+        <path
+          fill="none"
+          stroke="#FFFFFF"
+          stroke-opacity="0.18"
+          stroke-width="1"
+          d="M22.25 5.65 Q24 4.65 25.75 5.65 L38.65 13.1 Q40.75 14.3 40.75 16.7 L40.75 31.3 Q40.75 33.7 38.65 34.9 L25.75 42.35 Q24 43.35 22.25 42.35 L9.35 34.9 Q7.25 33.7 7.25 31.3 L7.25 16.7 Q7.25 14.3 9.35 13.1 Z"
+        />
+      </symbol>
+
+      <!-- Variant 2: Monochrome Mark -->
+      <symbol id="ds-logo-mark-mono" viewBox="0 0 48 48">
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          d="M21.75 4.8 Q24 3.5 26.25 4.8 L39.5 12.45 Q41.75 13.75 41.75 16.35 L41.75 31.65 Q41.75 34.25 39.5 35.55 L26.25 43.2 Q24 44.5 21.75 43.2 L8.5 35.55 Q6.25 34.25 6.25 31.65 L6.25 16.35 Q6.25 13.75 8.5 12.45 Z M15.2 13.5 H23.2 A10.5 10.5 0 0 1 23.2 34.5 H15.2 Z M19.6 17.8 V30.2 H23.2 A6.2 6.2 0 0 0 23.2 17.8 Z"
+        />
+      </symbol>
+
+      <!-- Variant 3: Reusable Lockup (Mark + Wordmark) -->
+      <symbol id="ds-logo-lockup" viewBox="0 0 236 48">
+        <use href="#ds-logo-mark" x="0" y="0" width="48" height="48" />
+        <text x="58" y="32" fill="currentColor" font-family="Sora, Inter, sans-serif" font-size="22" letter-spacing="-0.44">
+          <tspan font-weight="400">dheeraj</tspan><tspan font-weight="700" fill="url(#ds-word-grad)">soni</tspan>
+        </text>
+      </symbol>
+    </svg>
+
     <!-- Skip Link for Keyboard / Screen Reader Accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Subtle Film Grain Overlay -->
+    <!-- Subtle Film-Grain Overlay (3% opacity) -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- Animated Monogram Preloader (under 1.2s, bypassed when reduced-motion is set) -->
+    <!-- Animated Hexagon + D Preloader (under 1.2s, bypassed when reduced-motion is set) -->
     <div id="preloader" class="preloader" aria-hidden="true">
       <div class="preloader-inner">
-        <svg class="preloader-svg" viewBox="0 0 120 72" width="120" height="72" fill="none">
+        <svg class="preloader-svg" viewBox="0 0 48 48" width="84" height="84" fill="none" role="img" aria-label="Dheeraj Soni logo">
           <defs>
-            <linearGradient id="preloaderGrad" x1="0" y1="0" x2="120" y2="72" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#7C5CFF" />
-              <stop offset="100%" stop-color="#22D3EE" />
+            <linearGradient id="preloader-grad" x1="6" y1="3" x2="42" y2="45" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#8B5CF6" />
+              <stop offset="100%" stop-color="#5B3DF5" />
             </linearGradient>
           </defs>
+          <!-- Phase 1: Hexagon outline draws in -->
           <path
-            class="monogram-stroke"
-            d="M16 58V14H33C46 14 54 22.5 54 36C54 49.5 46 58 33 58H16Z"
-            stroke="#F4F4F8"
-            stroke-width="4.5"
-            stroke-linecap="round"
+            class="preloader-hex-outline"
+            d="M21.75 4.8 Q24 3.5 26.25 4.8 L39.5 12.45 Q41.75 13.75 41.75 16.35 L41.75 31.65 Q41.75 34.25 39.5 35.55 L26.25 43.2 Q24 44.5 21.75 43.2 L8.5 35.55 Q6.25 34.25 6.25 31.65 L6.25 16.35 Q6.25 13.75 8.5 12.45 Z"
+            stroke="url(#preloader-grad)"
+            stroke-width="2"
             stroke-linejoin="round"
           />
+          <!-- Phase 2: Hexagon fills + negative-space D reveals -->
           <path
-            class="monogram-stroke monogram-stroke-delay"
-            d="M98 21C94.5 16.5 89 14 82 14C71.5 14 65 20 65 27.5C65 35.5 72 38 82.5 40.5C93.5 43 100 45.5 100 53.5C100 61.5 92.5 66 81.5 66C73 66 66.5 63 62 58"
-            stroke="url(#preloaderGrad)"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            class="preloader-hex-fill"
+            fill="url(#preloader-grad)"
+            fill-rule="evenodd"
+            d="M21.75 4.8 Q24 3.5 26.25 4.8 L39.5 12.45 Q41.75 13.75 41.75 16.35 L41.75 31.65 Q41.75 34.25 39.5 35.55 L26.25 43.2 Q24 44.5 21.75 43.2 L8.5 35.55 Q6.25 34.25 6.25 31.65 L6.25 16.35 Q6.25 13.75 8.5 12.45 Z M15.2 13.5 H23.2 A10.5 10.5 0 0 1 23.2 34.5 H15.2 Z M19.6 17.8 V30.2 H23.2 A6.2 6.2 0 0 0 23.2 17.8 Z"
+          />
+          <path
+            class="preloader-hex-highlight"
+            d="M22.25 5.65 Q24 4.65 25.75 5.65 L38.65 13.1 Q40.75 14.3 40.75 16.7 L40.75 31.3 Q40.75 33.7 38.65 34.9 L25.75 42.35 Q24 43.35 22.25 42.35 L9.35 34.9 Q7.25 33.7 7.25 31.3 L7.25 16.7 Q7.25 14.3 9.35 13.1 Z"
+            stroke="#FFFFFF"
+            stroke-opacity="0.18"
+            stroke-width="1"
           />
         </svg>
       </div>
@@ -157,8 +216,13 @@
     <!-- Desktop / Tablet Floating Glass Pill Navbar -->
     <header class="desktop-nav-wrap" aria-label="Primary navigation">
       <nav class="desktop-nav glass-pill">
-        <a href="#hero" class="nav-brand" aria-label="Dheeraj Soni Home">
-          <span class="brand-monogram">DS</span>
+        <a href="#hero" class="brand-lockup" aria-label="Dheeraj Soni Home">
+          <svg class="brand-mark-svg" viewBox="0 0 48 48" width="32" height="32" role="img" aria-hidden="true">
+            <use href="#ds-logo-mark" />
+          </svg>
+          <span class="brand-wordmark">
+            <span class="wordmark-first">dheeraj</span><span class="wordmark-last">soni</span>
+          </span>
         </a>
 
         <ul class="nav-links" role="list">
@@ -193,9 +257,16 @@
       </nav>
     </header>
 
-    <!-- Mobile Top Minimal Controls (Brand + Theme Toggle only; main nav is the native bottom tab bar) -->
-    <div class="mobile-top-bar">
-      <a href="#hero" class="mobile-brand glass-chip" aria-label="Dheeraj Soni Home">DS</a>
+    <!-- Slim Mobile Top App-Bar (< 768px: Mark + Wordmark left, Theme Toggle right) -->
+    <header class="mobile-top-bar" aria-label="Mobile header">
+      <a href="#hero" class="brand-lockup brand-lockup-mobile" aria-label="Dheeraj Soni Home">
+        <svg class="brand-mark-svg" viewBox="0 0 48 48" width="28" height="28" role="img" aria-hidden="true">
+          <use href="#ds-logo-mark" />
+        </svg>
+        <span class="brand-wordmark brand-wordmark-mobile">
+          <span class="wordmark-first">dheeraj</span><span class="wordmark-last">soni</span>
+        </span>
+      </a>
       <button
         type="button"
         class="theme-toggle-btn glass-chip"
@@ -211,13 +282,14 @@
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </button>
-    </div>
+    </header>
 
     <!-- Main Content -->
     <main id="main-content">
       <!-- 1) HERO SECTION -->
       <section id="hero" class="hero-section" aria-label="Introduction">
         <div class="hero-bg-stage" aria-hidden="true">
+          <div class="hero-radial-glow"></div>
           <!-- Pure-CSS animated gradient orb fallback (shown when WebGL unavailable or reduced-motion) -->
           <div id="hero-fallback-orb" class="hero-fallback-orb"></div>
           <!-- Dedicated lightweight Three.js canvas -->
@@ -231,7 +303,9 @@
               Full Stack Developer · .NET · Angular · Next.js
             </p>
 
-            <h1 class="hero-title split-reveal">Dheeraj Soni</h1>
+            <h1 class="hero-title split-reveal">
+              Dheeraj <span class="brand-gradient-text">Soni</span>
+            </h1>
 
             <div class="hero-role-row reveal-hero" aria-live="polite">
               <span class="role-prefix">Role</span>
@@ -264,7 +338,7 @@
                 <span>Download Resume</span>
               </a>
 
-              <a href="#contact" class="btn btn-outline magnetic-btn">
+              <a href="#contact" class="btn btn-glass magnetic-btn">
                 <span>Contact Me</span>
               </a>
             </div>
@@ -321,28 +395,25 @@
       <section id="about" class="section" aria-labelledby="about-heading">
         <div class="container">
           <div class="section-header fade-up">
-            <p class="section-eyebrow">01 · About</p>
+            <p class="section-eyebrow">
+              <span class="numeral eyebrow-num">01</span>
+              <span aria-hidden="true">·</span>
+              <span>About</span>
+            </p>
             <h2 id="about-heading" class="section-title split-reveal">
               Engineering complete web products from API architecture to UI craft.
             </h2>
           </div>
 
           <div class="about-grid">
-            <!-- Profile Image Frame (Trivial to swap src to /assets/profile.jpg; DS monogram sits cleanly as fallback) -->
+            <!-- Profile Image Frame (Trivial to swap src to /assets/profile.jpg; D badge sits cleanly as fallback) -->
             <div class="about-portrait-col fade-up">
               <div class="portrait-frame glass-card">
                 <div class="portrait-inner">
-                  <!-- DS Monogram SVG placeholder (visible if portrait image is removed or fails to load) -->
+                  <!-- Hexagon D Mark fallback (visible if portrait image is removed or fails to load) -->
                   <div class="portrait-monogram-fallback" aria-hidden="true">
-                    <svg viewBox="0 0 160 160" width="112" height="112" fill="none">
-                      <defs>
-                        <linearGradient id="dsAboutGrad" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
-                          <stop offset="0%" stop-color="#7C5CFF" />
-                          <stop offset="100%" stop-color="#22D3EE" />
-                        </linearGradient>
-                      </defs>
-                      <circle cx="80" cy="80" r="74" stroke="url(#dsAboutGrad)" stroke-width="1.5" stroke-opacity="0.5" />
-                      <text x="80" y="96" text-anchor="middle" fill="currentColor" font-family="Syne, sans-serif" font-size="48" font-weight="800">DS</text>
+                    <svg viewBox="0 0 48 48" width="128" height="128" role="img" aria-label="Dheeraj Soni monogram">
+                      <use href="#ds-logo-mark" />
                     </svg>
                   </div>
                   <!-- To swap with your own photo, replace src below with "/assets/profile.jpg" -->
@@ -379,7 +450,7 @@
               </article>
             </div>
 
-            <!-- Story & Factual Stats -->
+            <!-- Story & Premium Factual Stat Cards -->
             <div class="about-story-col fade-up">
               <div class="about-prose">
                 <p>
@@ -394,29 +465,37 @@
               </div>
 
               <div class="stats-grid" aria-label="Career summary">
-                <div class="stat-card glass-card">
-                  <div class="stat-value tabular-nums" data-counter="3">3</div>
-                  <div class="stat-label">Companies</div>
-                  <div class="stat-sub">Questech · BTJ Alpha · Glidedmatrix</div>
-                </div>
+                <article class="stat-card glass-card">
+                  <div class="stat-value">
+                    <span class="numeral stat-num" data-counter="3" data-pad="2">03</span>
+                  </div>
+                  <h3 class="stat-label">Companies</h3>
+                  <p class="stat-sub">Questech · BTJ Alpha · Glidedmatrix</p>
+                </article>
 
-                <div class="stat-card glass-card">
-                  <div class="stat-value tabular-nums" data-counter="7">7</div>
-                  <div class="stat-label">Major Applications</div>
-                  <div class="stat-sub">Enterprise, CRM, Marketplace &amp; GovTech</div>
-                </div>
+                <article class="stat-card glass-card">
+                  <div class="stat-value">
+                    <span class="numeral stat-num" data-counter="7" data-pad="2">07</span>
+                  </div>
+                  <h3 class="stat-label">Major Applications</h3>
+                  <p class="stat-sub">Enterprise, CRM, Marketplace &amp; GovTech</p>
+                </article>
 
-                <div class="stat-card glass-card">
-                  <div class="stat-value tabular-nums" data-counter="3">3</div>
-                  <div class="stat-label">Core Stacks</div>
-                  <div class="stat-sub">.NET · Angular / Next.js · WordPress</div>
-                </div>
+                <article class="stat-card glass-card">
+                  <div class="stat-value">
+                    <span class="numeral stat-num" data-counter="3" data-pad="2">03</span>
+                  </div>
+                  <h3 class="stat-label">Core Stacks</h3>
+                  <p class="stat-sub">.NET · Angular / Next.js · WordPress</p>
+                </article>
 
-                <div class="stat-card glass-card">
-                  <div class="stat-value">Many</div>
-                  <div class="stat-label">WordPress Websites</div>
-                  <div class="stat-sub">Custom themes, WooCommerce &amp; SEO</div>
-                </div>
+                <article class="stat-card glass-card">
+                  <div class="stat-value">
+                    <span class="numeral stat-num" data-counter="4" data-pad="0">4</span><span class="numeral stat-suffix">+</span>
+                  </div>
+                  <h3 class="stat-label">WordPress Websites</h3>
+                  <p class="stat-sub">Custom themes, WooCommerce &amp; SEO</p>
+                </article>
               </div>
             </div>
           </div>
@@ -427,7 +506,11 @@
       <section id="skills" class="section" aria-labelledby="skills-heading">
         <div class="container">
           <div class="section-header fade-up">
-            <p class="section-eyebrow">02 · Capabilities</p>
+            <p class="section-eyebrow">
+              <span class="numeral eyebrow-num">02</span>
+              <span aria-hidden="true">·</span>
+              <span>Capabilities</span>
+            </p>
             <h2 id="skills-heading" class="section-title split-reveal">
               Technical stack across backend APIs, frontends, and CMS delivery.
             </h2>
@@ -447,17 +530,33 @@
         <div class="container">
           <div class="projects-top fade-up">
             <div class="section-header">
-              <p class="section-eyebrow">03 · Selected Work</p>
+              <p class="section-eyebrow">
+                <span class="numeral eyebrow-num">03</span>
+                <span aria-hidden="true">·</span>
+                <span>Selected Work</span>
+              </p>
               <h2 id="projects-heading" class="section-title split-reveal">
                 Production applications &amp; live client websites.
               </h2>
             </div>
 
             <div class="filter-bar" role="tablist" aria-label="Filter projects by stack">
-              <button type="button" class="filter-tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
-              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="dotnet">.NET</button>
-              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="next-angular">Next.js + Angular</button>
-              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="wordpress">WordPress</button>
+              <button type="button" class="filter-tab is-active" role="tab" aria-selected="true" data-filter="all">
+                <span>All</span>
+                <span class="tab-count numeral" data-filter-count="all">12</span>
+              </button>
+              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="dotnet">
+                <span>.NET</span>
+                <span class="tab-count numeral" data-filter-count="dotnet">07</span>
+              </button>
+              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="next-angular">
+                <span>Next.js + Angular</span>
+                <span class="tab-count numeral" data-filter-count="next-angular">03</span>
+              </button>
+              <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="wordpress">
+                <span>WordPress</span>
+                <span class="tab-count numeral" data-filter-count="wordpress">05</span>
+              </button>
             </div>
           </div>
 
@@ -475,7 +574,11 @@
       <section id="experience" class="section" aria-labelledby="experience-heading">
         <div class="container">
           <div class="section-header fade-up">
-            <p class="section-eyebrow">04 · Career &amp; Credentials</p>
+            <p class="section-eyebrow">
+              <span class="numeral eyebrow-num">04</span>
+              <span aria-hidden="true">·</span>
+              <span>Career &amp; Credentials</span>
+            </p>
             <h2 id="experience-heading" class="section-title split-reveal">
               Experience, education, and certifications.
             </h2>
@@ -507,9 +610,13 @@
       <section id="contact" class="section contact-section" aria-labelledby="contact-heading">
         <div class="container">
           <div class="contact-header fade-up">
-            <p class="section-eyebrow">05 · Contact</p>
+            <p class="section-eyebrow">
+              <span class="numeral eyebrow-num">05</span>
+              <span aria-hidden="true">·</span>
+              <span>Contact</span>
+            </p>
             <h2 id="contact-heading" class="contact-headline split-reveal">
-              Let's build something remarkable.
+              Let's build something <span class="brand-gradient-text">remarkable.</span>
             </h2>
             <p class="contact-sub">
               Available for full-stack roles, product engineering, and custom web collaborations.
@@ -540,7 +647,7 @@
                 </span>
                 <div>
                   <span class="contact-card-label">Phone</span>
-                  <span class="contact-card-value tabular-nums">+91 6394252736</span>
+                  <span class="contact-card-value numeral inline-numeral">+91 6394252736</span>
                 </div>
               </a>
 
@@ -650,11 +757,20 @@
       </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (with full brand lockup) -->
     <footer class="site-footer">
       <div class="container footer-inner">
+        <a href="#hero" class="brand-lockup brand-lockup-footer" aria-label="Dheeraj Soni Home">
+          <svg class="brand-mark-svg" viewBox="0 0 48 48" width="28" height="28" role="img" aria-hidden="true">
+            <use href="#ds-logo-mark" />
+          </svg>
+          <span class="brand-wordmark brand-wordmark-footer">
+            <span class="wordmark-first">dheeraj</span><span class="wordmark-last">soni</span>
+          </span>
+        </a>
+
         <p class="footer-copy">
-          &copy; <span id="footer-year">2026</span> Dheeraj Soni. Crafted in Prayagraj, India.
+          &copy; <span id="footer-year" class="numeral inline-numeral">2026</span> Dheeraj Soni. Crafted in Prayagraj, India.
         </p>
 
         <button type="button" id="back-to-top" class="back-to-top-btn" aria-label="Back to top">
@@ -782,7 +898,11 @@
       >
         <header class="chat-header">
           <div class="chat-header-info">
-            <div class="chat-avatar" aria-hidden="true">DS</div>
+            <div class="chat-avatar" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="38" height="38" role="img" aria-hidden="true">
+                <use href="#ds-logo-mark" />
+              </svg>
+            </div>
             <div>
               <h2 class="chat-title">Ask Dheeraj's AI</h2>
               <p class="chat-status">
