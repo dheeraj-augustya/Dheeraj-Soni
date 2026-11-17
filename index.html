@@ -162,7 +162,7 @@
       <symbol id="ds-logo-lockup" viewBox="0 0 236 48">
         <use href="#ds-logo-mark" x="0" y="0" width="48" height="48" />
         <text x="58" y="32" fill="currentColor" font-family="Sora, Inter, sans-serif" font-size="22" letter-spacing="-0.44">
-          <tspan font-weight="400">dheeraj</tspan><tspan font-weight="700" fill="url(#ds-word-grad)">soni</tspan>
+          <tspan font-weight="400">Dheeraj</tspan><tspan font-weight="700" fill="url(#ds-word-grad)">soni</tspan>
         </text>
       </symbol>
     </svg>
@@ -221,7 +221,7 @@
             <use href="#ds-logo-mark" />
           </svg>
           <span class="brand-wordmark">
-            <span class="wordmark-first">dheeraj</span><span class="wordmark-last">soni</span>
+            <span class="wordmark-first">Dheeraj</span><span class="wordmark-last">soni</span>
           </span>
         </a>
 
@@ -250,7 +250,7 @@
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
           </button>
-          <a href="#contact" class="nav-cta magnetic-btn">
+          <a href="#contact" class="nav-cta">
             <span>Hire me</span>
           </a>
         </div>
@@ -287,7 +287,8 @@
     <!-- Main Content -->
     <main id="main-content">
       <!-- 1) HERO SECTION -->
-      <section id="hero" class="hero-section" aria-label="Introduction">
+      <section id="hero" class="hero-experience" aria-label="Introduction and featured projects">
+        <div class="hero-section">
         <div class="hero-bg-stage" aria-hidden="true">
           <div class="hero-radial-glow"></div>
           <!-- Pure-CSS animated gradient orb fallback (shown when WebGL unavailable or reduced-motion) -->
@@ -318,7 +319,7 @@
             </p>
 
             <div class="hero-actions reveal-hero">
-              <a href="#projects" class="btn btn-primary magnetic-btn">
+              <a href="#projects" class="btn btn-primary">
                 <span>View Projects</span>
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M5 12h14M12 5l7 7-7 7"></path>
@@ -328,7 +329,7 @@
               <a
                 href="/assets/Dheeraj_Soni_Resume.pdf"
                 download="Dheeraj_Soni_Resume.pdf"
-                class="btn btn-glass magnetic-btn"
+                class="btn btn-glass"
               >
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -338,7 +339,7 @@
                 <span>Download Resume</span>
               </a>
 
-              <a href="#contact" class="btn btn-glass magnetic-btn">
+              <a href="#contact" class="btn btn-glass">
                 <span>Contact Me</span>
               </a>
             </div>
@@ -389,6 +390,23 @@
           <span class="scroll-line"></span>
           <span class="scroll-text">Scroll</span>
         </a>
+        </div>
+
+      <section id="featured-journeys" class="featured-journeys" aria-labelledby="journeys-heading">
+        <div class="container">
+          <div class="journeys-header">
+            <div><p class="journeys-eyebrow">A closer look at my work</p><h2 id="journeys-heading">Projects worth exploring.</h2></div>
+            <div class="journeys-controls" aria-label="Featured project carousel controls">
+              <button type="button" id="journeys-prev" aria-label="Previous featured project">←</button>
+              <button type="button" id="journeys-pause" aria-label="Pause featured project slideshow" aria-pressed="false">Ⅱ</button>
+              <button type="button" id="journeys-next" aria-label="Next featured project">→</button>
+            </div>
+          </div>
+          <div id="journeys-accent" class="journeys-accent" aria-hidden="true"></div>
+          <div id="journeys-track" class="journeys-track" role="region" aria-roledescription="carousel" aria-label="Featured project tickets" tabindex="0"></div>
+          <p class="journeys-hint">Explore the interface. Discover the thinking behind it.<span>Swipe or use the arrows →</span></p>
+        </div>
+      </section>
       </section>
 
       <!-- 2) ABOUT SECTION -->
@@ -543,19 +561,15 @@
             <div class="filter-bar" role="tablist" aria-label="Filter projects by stack">
               <button type="button" class="filter-tab is-active" role="tab" aria-selected="true" data-filter="all">
                 <span>All</span>
-                <span class="tab-count numeral" data-filter-count="all">12</span>
               </button>
               <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="dotnet">
                 <span>.NET</span>
-                <span class="tab-count numeral" data-filter-count="dotnet">07</span>
               </button>
               <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="next-angular">
                 <span>Next.js + Angular</span>
-                <span class="tab-count numeral" data-filter-count="next-angular">03</span>
               </button>
               <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="wordpress">
                 <span>WordPress</span>
-                <span class="tab-count numeral" data-filter-count="wordpress">05</span>
               </button>
             </div>
           </div>
@@ -701,10 +715,12 @@
 
             <!-- Contact Form -->
             <form id="contact-form" class="contact-form glass-card fade-up" novalidate>
+              <div class="contact-honeypot" aria-hidden="true"><label for="contact-website">Leave this field empty</label><input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
               <div class="form-field">
                 <label for="contact-name" class="form-label">Your Name</label>
                 <input
                   id="contact-name"
+                  maxlength="100"
                   name="name"
                   type="text"
                   required
@@ -719,6 +735,7 @@
                 <label for="contact-email" class="form-label">Email Address</label>
                 <input
                   id="contact-email"
+                  maxlength="254"
                   name="email"
                   type="email"
                   required
@@ -733,6 +750,7 @@
                 <label for="contact-message" class="form-label">Message</label>
                 <textarea
                   id="contact-message"
+                  maxlength="5000"
                   name="message"
                   rows="5"
                   required
@@ -742,7 +760,7 @@
                 <span class="form-error" id="error-message" aria-live="polite"></span>
               </div>
 
-              <button type="submit" id="contact-submit" class="btn btn-primary btn-full magnetic-btn">
+              <button type="submit" id="contact-submit" class="btn btn-primary btn-full">
                 <span>Send Message</span>
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -907,7 +925,7 @@
               <h2 class="chat-title">Ask Dheeraj's AI</h2>
               <p class="chat-status">
                 <span class="chat-online-dot" aria-hidden="true"></span>
-                <span>Online · EN / HI / Hinglish</span>
+                <span id="chat-service-status">English · हिंदी · Hinglish</span>
               </p>
             </div>
           </div>
@@ -926,19 +944,29 @@
           </div>
         </header>
 
+        <p id="chat-service-notice" class="chat-service-notice" role="status" hidden></p>
         <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
 
         <div id="chat-quick-questions" class="chat-quick-questions" aria-label="Suggested questions"></div>
 
+        <div class="chat-voice-toolbar">
+          <label for="chat-language">Voice language</label>
+          <select id="chat-language"><option value="en-IN">English</option><option value="hi-IN">हिंदी</option></select>
+          <button type="button" id="chat-audio" class="chat-icon-btn" aria-pressed="false" title="Read replies aloud">Voice off</button>
+        </div>
+        <p id="chat-voice-status" class="chat-voice-status" role="status">Type a question, or use the microphone.</p>
         <form id="chat-form" class="chat-input-area">
           <textarea
             id="chat-input"
             class="chat-input"
             rows="1"
             maxlength="1000"
-            placeholder="Ask about skills, projects, or hiring..."
+            placeholder="Ask about Dheeraj…"
             aria-label="Type your message"
           ></textarea>
+          <button type="button" id="chat-mic" class="chat-icon-btn chat-mic" aria-label="Start microphone" aria-pressed="false" title="Speak a question">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
+          </button>
           <button type="submit" id="chat-send" class="chat-send-btn" aria-label="Send message">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="22" y1="2" x2="11" y2="13"></line>

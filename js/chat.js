@@ -1,3 +1,4 @@
+import { setupVoice } from './chat-voice.js';
 /**
  * Bilingual AI Assistant Frontend (/js/chat.js)
  * Communicates strictly with /api/chat and safely builds DOM nodes for basic markdown.
@@ -123,6 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let history = loadHistory();
   let isLoading = false;
+  let requestController = null;
+  let conversationVersion = 0;
+  const serviceStatus = document.getElementById('chat-service-status');
+  const serviceNotice = document.getElementById('chat-service-notice');
+  const voice = setupVoice({ input, isBusy: () => isLoading, onSubmit: (text) => sendMessage(text) });
+  const syncViewport = () => {
+    const viewport = window.visualViewport;
+    chatWindow.style.setProperty('--chat-viewport-height', `${viewport?.height || window.innerHeight}px`);
+    chatWindow.style.setProperty('--chat-viewport-top', `${viewport?.offsetTop || 0}px`);
+  };
+  window.visualViewport?.addEventListener('resize', syncViewport);
+  window.visualViewport?.addEventListener('scroll', syncViewport);
+  syncViewport();
 
   function scrollToBottom() {
     messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -186,95 +200,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setChatOpen(open) {
     chatWindow.hidden = !open;
+    if (!open) voice.stop();
     fab.setAttribute('aria-expanded', String(open));
     if (open && unreadDot) {
       unreadDot.classList.add('is-hidden');
     }
     if (open) {
       scrollToBottom();
-      window.setTimeout(() => input.focus(), 60);
+      if (window.matchMedia('(pointer: fine)').matches) window.setTimeout(() => input.focus(), 60);
     }
   }
 
   async function sendMessage(rawText) {
     const text = rawText.trim().slice(0, 1000);
     if (!text || isLoading) return;
-
+    voice.stop();
+    const version = conversationVersion;
+    requestController = new AbortController();
+    const timeout = setTimeout(() => requestController?.abort(), 23000);
     isLoading = true;
     sendBtn.disabled = true;
+    voice.setBusy(true);
     input.value = '';
     input.style.height = 'auto';
-
     history.push({ role: 'user', text });
+    history = history.slice(-20);
     saveHistory(history);
     appendBubble('user', text);
     updateQuickQuestionsVisibility();
-
     const typingNode = showTypingIndicator();
-
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history.slice(-10) }),
+        body: JSON.stringify({ messages: history.slice(-10), language: voice.language() }),
+        signal: requestController.signal,
       });
-
-      const responseText = await response.text();
-      let data = null;
-      let isJson = false;
-
-      try {
-        data = JSON.parse(responseText);
-        isJson = Boolean(data && typeof data === 'object');
-      } catch {
-        isJson = false;
-      }
-
-      typingNode.remove();
-
-      if (!response.ok) {
-        if (response.status === 404 && !isJson) {
-          console.error('Chat service 404 (serverless endpoint unavailable in static preview):', response.status, responseText);
-          appendBubble(
-            'assistant',
-            'The AI chat service is unavailable in this static preview because /api/chat requires Vercel serverless hosting. Once deployed to Vercel it works automatically — meanwhile, feel free to email dheerajsoni.dev@gmail.com or use the Contact section.',
-            true
-          );
-        } else if (!isJson) {
-          console.error('Chat service non-JSON error response:', response.status, responseText);
-          appendBubble('assistant', 'Chat service is not reachable. Please try again shortly.', true);
-        } else {
-          console.error('Chat service error response:', response.status, data);
-          const errorMsg =
-            typeof data.error === 'string' && data.error
-              ? data.error
-              : 'Chat service is not reachable. Please try again shortly.';
-          appendBubble('assistant', errorMsg, true);
-        }
-      } else if (!isJson) {
-        console.error('Chat service returned non-JSON success response:', response.status, responseText);
-        appendBubble('assistant', 'Chat service is not reachable. Please try again shortly.', true);
-      } else if (typeof data.reply === 'string' && data.reply.trim()) {
-        const reply = data.reply.trim();
-        history.push({ role: 'assistant', text: reply });
-        saveHistory(history);
-        appendBubble('assistant', reply);
-      } else {
-        console.error('Chat service missing reply field:', response.status, data);
-        appendBubble('assistant', 'Chat service is not reachable. Please try again shortly.', true);
-      }
-    } catch (err) {
-      typingNode.remove();
-      console.error('Chat network failure:', err);
-      appendBubble(
-        'assistant',
-        'Chat service is not reachable. Please try again shortly.',
-        true
-      );
+      const data = await response.json().catch(() => null);
+      if (version !== conversationVersion) return;
+      if (!response.ok || !data?.reply?.trim()) throw new Error(data?.error || '');
+      const reply = data.reply.trim();
+      history.push({ role: 'assistant', text: reply });
+      saveHistory(history);
+      appendBubble('assistant', reply);
+      serviceStatus.textContent = data.mode === 'profile' ? 'Portfolio answers · English / हिंदी' : 'AI replies · English / हिंदी';
+      serviceNotice.hidden = data.mode !== 'profile';
+      serviceNotice.textContent = data.notice || '';
+      voice.setServiceAvailable(data.mode !== 'profile');
+      if (!chatWindow.hidden) voice.speak(reply);
+    } catch (error) {
+      if (version !== conversationVersion) return;
+      const hindi = voice.language() === 'hi-IN' || /[\u0900-\u097f]/u.test(text);
+      appendBubble('assistant', error.message || (hindi
+        ? 'अभी जवाब नहीं मिल पाया. कृपया दोबारा भेजें या dheerajsoni.dev@gmail.com पर संपर्क करें.'
+        : 'Unable to get a reply. Please send your question again or email dheerajsoni.dev@gmail.com.'), true);
     } finally {
-      isLoading = false;
-      sendBtn.disabled = false;
-      input.focus();
+      clearTimeout(timeout);
+      typingNode.remove();
+      if (version === conversationVersion) {
+        requestController = null;
+        isLoading = false;
+        sendBtn.disabled = false;
+        voice.setBusy(false);
+        if (!chatWindow.hidden && window.matchMedia('(pointer: fine)').matches) input.focus();
+      }
     }
   }
 
@@ -289,6 +278,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
+      conversationVersion++;
+      requestController?.abort();
+      voice.stop();
+      isLoading = false;
+      sendBtn.disabled = false;
+      voice.setBusy(false);
       history = [];
       saveHistory(history);
       renderAllMessages();
@@ -301,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
       e.preventDefault();
       sendMessage(input.value);
     }

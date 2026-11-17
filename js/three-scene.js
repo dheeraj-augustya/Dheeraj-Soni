@@ -34,7 +34,7 @@ function detectSoftwareWebGL() {
 }
 
 function getLayoutConfig(width) {
-  if (width >= 1024) {
+  if (width >= 1200) {
     // Desktop: center at ~76% viewport width, vertically centered on headline block, ~15% smaller
     return {
       u: 0.76,
@@ -45,20 +45,20 @@ function getLayoutConfig(width) {
     };
   }
   if (width >= 768) {
-    // Tablet: top-right, smaller
+    // Tablet: a separate right-hand visual beside the introduction.
     return {
-      u: 0.78,
-      v: 0.28,
-      scale: 0.72,
+      u: 0.82,
+      v: 0.5,
+      scale: 0.48,
       cameraZ: 6.2,
       isDesktopInteractive: false,
     };
   }
   // Mobile: upper-right, smaller
   return {
-    u: 0.75,
-    v: 0.24,
-    scale: 0.62,
+    u: 0.65,
+    v: 0.5,
+    scale: 1.1,
     cameraZ: 6.5,
     isDesktopInteractive: false,
   };

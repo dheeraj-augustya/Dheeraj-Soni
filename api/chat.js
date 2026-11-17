@@ -1,15 +1,4 @@
-/**
- * Vercel Serverless Function: /api/chat
- * Node.js CommonJS handler proxying visitor questions to the Google Gemini API.
- *
- * Deployment note:
- * Static-only preview servers cannot execute Vercel serverless functions and will
- * return 404 for /api/chat. This endpoint executes after deploying to Vercel
- * (or locally via `vercel dev` or the Express dev server in `server.ts`).
- *
- * Security: GEMINI_API_KEY is read strictly from process.env on the server and
- * is never hardcoded, logged, or returned to the browser.
- */
+const profileAnswer = require('./profile.cjs');
 
 const SYSTEM_PROMPT = `You are the AI assistant on Dheeraj Soni's portfolio website. You answer visitors' questions about Dheeraj.
 
@@ -36,239 +25,80 @@ PROFILE DATA:
 - Languages: Hindi, English.
 - Contact: dheerajsoni.dev@gmail.com, +91 6394252736, LinkedIn: https://www.linkedin.com/in/dheeraj-soni-india/, GitHub: https://github.com/dheeraj-augustya`;
 
-const DEFAULT_MODEL = 'gemini-4-hydrogen';
-const FALLBACK_MODELS = ['gemini-4-hydrogen', 'gemini-3.1-flash-lite', 'gemini-2.5-flash'];
 
-// Simple in-memory per-IP rate limiter (10 requests per 60 seconds)
-const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const RATE_LIMIT_MAX = 10;
-const rateLimitStore = new Map();
-
-function getClientIp(req) {
-  const forwarded = req.headers && req.headers['x-forwarded-for'];
-  if (typeof forwarded === 'string' && forwarded.length > 0) {
-    return forwarded.split(',')[0].trim();
-  }
-  return (req.socket && req.socket.remoteAddress) || 'unknown';
-}
-
-function isRateLimited(ip) {
-  const now = Date.now();
-  const entry = rateLimitStore.get(ip);
-
-  if (rateLimitStore.size > 1000) {
-    for (const [key, val] of rateLimitStore.entries()) {
-      if (now > val.resetAt) rateLimitStore.delete(key);
-    }
-  }
-
-  if (!entry || now > entry.resetAt) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
-  }
-
-  if (entry.count >= RATE_LIMIT_MAX) {
-    return true;
-  }
-
-  entry.count += 1;
-  return false;
-}
-
-/**
- * Normalizes the last 10 messages into a strictly alternating Gemini `contents`
- * array starting with role "user" and mapping "assistant" -> "model".
- */
-function buildAlternatingContents(rawMessages) {
-  const recentMessages = rawMessages.slice(-10);
-  const contents = [];
-
-  for (const msg of recentMessages) {
-    if (!msg || typeof msg.text !== 'string') continue;
-    const trimmed = msg.text.trim().slice(0, 1000);
-    if (!trimmed) continue;
-
-    const role = msg.role === 'assistant' ? 'model' : 'user';
-
-    // Gemini requires the first turn in `contents` to have role "user"
-    if (contents.length === 0 && role !== 'user') {
-      continue;
-    }
-
-    const prev = contents[contents.length - 1];
-    if (prev && prev.role === role) {
-      prev.parts[0].text = `${prev.parts[0].text}\n${trimmed}`.slice(0, 1000);
-    } else {
-      contents.push({
-        role,
-        parts: [{ text: trimmed }],
-      });
-    }
-  }
-
-  return contents;
-}
-
-function buildGenerationConfig(model) {
-  if (/^gemini-4-/i.test(model)) {
-    return {
-      maxOutputTokens: 1024,
-      thinkingConfig: {
-        thinkingLevel: 'LOW',
-      },
-    };
-  }
-  return {
-    temperature: 0.9,
-    topP: 0.95,
-    maxOutputTokens: 400,
-  };
-}
-
-async function callGeminiModel({ model, apiKey, contents }) {
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 25000);
-
-  try {
-    const apiResponse = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': apiKey,
-      },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: SYSTEM_PROMPT }],
-        },
-        contents,
-        generationConfig: buildGenerationConfig(model),
-      }),
-      signal: controller.signal,
-    });
-
-    const rawBody = await apiResponse.text();
-    return { status: apiResponse.status, ok: apiResponse.ok, rawBody };
-  } finally {
-    clearTimeout(timeoutId);
-  }
-}
-
+const rateLimits = new Map();
 module.exports = async (req, res) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-
+  res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
-
-  const clientIp = getClientIp(req);
-  if (isRateLimited(clientIp)) {
-    return res.status(429).json({
-      error: 'The AI is busy right now. Please try again in a minute.',
-    });
-  }
-
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error('Gemini API configuration error: GEMINI_API_KEY is not set.');
-    return res.status(503).json({
-      error: 'The AI assistant is temporarily unavailable. Please contact Dheeraj at dheerajsoni.dev@gmail.com.',
-    });
-  }
-
   let body = req.body;
   if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch {
-      return res.status(400).json({ error: 'Invalid JSON request body.' });
-    }
+    try { body = JSON.parse(body); } catch { return res.status(400).json({ error: 'Invalid JSON.' }); }
   }
-
-  const rawMessages = body && body.messages;
-  if (!Array.isArray(rawMessages) || rawMessages.length === 0) {
-    return res.status(400).json({ error: 'Request must include a non-empty messages array.' });
+  const messages = body?.messages;
+  if (!Array.isArray(messages) || !messages.length || messages.length > 20 ||
+      messages.some(m => !m || !['user', 'assistant'].includes(m.role) || typeof m.text !== 'string' || !m.text.trim() || m.text.length > 1000) ||
+      messages.at(-1).role !== 'user') {
+    return res.status(400).json({ error: 'Send 1–20 valid messages ending with a user question (maximum 1000 characters each).' });
   }
-
-  const contents = buildAlternatingContents(rawMessages);
-  if (contents.length === 0) {
-    return res.status(400).json({ error: 'At least one non-empty user message is required.' });
+  const hindi = /[ऀ-ॿ]/u.test(messages.at(-1).text) || body.language === 'hi-IN';
+  const ip = req.socket?.remoteAddress || req.headers?.['x-forwarded-for'] || 'unknown';
+  const now = Date.now();
+  for (const [key, value] of rateLimits) if (value.until < now) rateLimits.delete(key);
+  const entry = rateLimits.get(ip) || { count: 0, until: now + 60000 };
+  rateLimits.set(ip, entry);
+  if (++entry.count > 15) {
+    res.setHeader('Retry-After', String(Math.max(1, Math.ceil((entry.until - now) / 1000))));
+    return res.status(429).json({ error: hindi ? 'कृपया एक मिनट बाद फिर पूछें.' : 'Please wait a minute before asking again.' });
   }
-
-  const configuredModel = (process.env.GEMINI_MODEL || DEFAULT_MODEL).trim();
-  const modelsToTry = [
-    configuredModel,
-    ...FALLBACK_MODELS.filter((m) => m !== configuredModel),
-  ];
-
+  const fallback = (reason = 'unavailable') => {
+    const notices = {
+      expired: ['The Gemini API key has expired. Voice chat is unavailable. You can still type questions for basic portfolio answers.', 'Gemini API की समाप्ति तिथि बीत गई है. वॉइस चैट उपलब्ध नहीं है. आप पोर्टफोलियो के सामान्य सवाल लिखकर पूछ सकते हैं.'],
+      credentials: ['The Gemini API key is invalid or access is denied. Voice chat is unavailable. You can still type questions for basic portfolio answers.', 'Gemini API key अमान्य है या एक्सेस नहीं मिला. वॉइस चैट उपलब्ध नहीं है. आप पोर्टफोलियो के सामान्य सवाल लिखकर पूछ सकते हैं.'],
+      quota: ['Gemini usage quota or request limit has been reached. Voice chat is temporarily unavailable. You can still type questions for basic portfolio answers.', 'Gemini की उपयोग सीमा पूरी हो गई है. वॉइस चैट अभी उपलब्ध नहीं है. आप पोर्टफोलियो के सामान्य सवाल लिखकर पूछ सकते हैं.'],
+      configuration: ['AI chat is not configured yet. You can still type questions for basic portfolio answers.', 'AI चैट अभी कॉन्फ़िगर नहीं है. आप पोर्टफोलियो के सामान्य सवाल लिखकर पूछ सकते हैं.'],
+      unavailable: ['Gemini is temporarily unavailable. Voice chat is paused. You can still type questions for basic portfolio answers; send another question to retry AI.', 'Gemini अभी उपलब्ध नहीं है. वॉइस चैट रुकी है. आप पोर्टफोलियो के सामान्य सवाल लिखकर पूछ सकते हैं; अगला सवाल AI से फिर कोशिश करेगा.'],
+    };
+    return res.status(200).json({ reply: profileAnswer(messages, body.language), mode: 'profile', reason, notice: notices[reason][hindi ? 1 : 0] });
+  };
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  if (!apiKey || /^(your_|placeholder)/i.test(apiKey)) return fallback('configuration');
+  const model = process.env.GEMINI_MODEL?.trim() || 'gemini-3.1-flash-lite';
+  const contents = [];
+  for (const message of messages.slice(-10)) {
+    const role = message.role === 'assistant' ? 'model' : 'user';
+    if (!contents.length && role !== 'user') continue;
+    if (contents.at(-1)?.role === role) contents.at(-1).parts[0].text += '\n' + message.text;
+    else contents.push({ role, parts: [{ text: message.text }] });
+  }
   try {
-    let lastResult = null;
-
-    for (const model of modelsToTry) {
-      lastResult = await callGeminiModel({ model, apiKey, contents });
-      if (lastResult.ok) {
-        break;
-      }
-
-      console.error(`Gemini API error (${model}):`, lastResult.status, lastResult.rawBody);
-
-      // Only try fallback models when the requested model returns 404 (not found / unsupported)
-      if (lastResult.status !== 404) {
-        break;
-      }
-    }
-
-    if (!lastResult || !lastResult.ok) {
-      const status = lastResult ? lastResult.status : 502;
-      if (status === 429) {
-        return res.status(429).json({
-          error: 'The AI is busy right now. Please try again in a minute.',
-        });
-      }
-      return res.status(status).json({
-        error: 'Unable to reach the AI service right now. Please try again shortly.',
-      });
-    }
-
-    let data;
-    try {
-      data = JSON.parse(lastResult.rawBody);
-    } catch {
-      console.error('Gemini API invalid JSON response:', lastResult.status, lastResult.rawBody);
-      return res.status(502).json({
-        error: 'Received an unexpected response from the AI service. Please try again shortly.',
-      });
-    }
-
-    const candidate = data && Array.isArray(data.candidates) ? data.candidates[0] : null;
-    const parts =
-      candidate && candidate.content && Array.isArray(candidate.content.parts)
-        ? candidate.content.parts
-        : [];
-
-    const reply = parts
-      .map((part) => (typeof part.text === 'string' ? part.text : ''))
-      .join('')
-      .trim();
-
-    if (!reply) {
-      console.error('Gemini API returned empty reply:', lastResult.status, lastResult.rawBody);
-      return res.status(502).json({
-        error: 'I could not generate a response right now. Please try again or reach out via email.',
-      });
-    }
-
-    return res.status(200).json({ reply });
-  } catch (err) {
-    console.error('Gemini API request failed:', err && err.message ? err.message : err);
-    if (err && err.name === 'AbortError') {
-      return res.status(504).json({
-        error: 'The AI service took too long to respond. Please try again shortly.',
-      });
-    }
-    return res.status(500).json({
-      error: 'Something went wrong while contacting the AI assistant. Please try again shortly.',
+    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT + '\nHonor explicit requests for Hindi or English. Otherwise match the visitor. Selected language: ' + (hindi ? 'Hindi' : 'English or the language of the question') }] },
+        contents,
+        generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
+      }),
+      signal: AbortSignal.timeout(18000),
     });
+    if (!response.ok) {
+      console.warn('Portfolio AI provider status:', response.status);
+      const failure = await response.json().catch(() => null);
+      const message = failure?.error?.message || '';
+      const expired = /api.?key.*expired|expired.*api.?key/i.test(message);
+      const invalid = /api.?key.*(invalid|not valid)|API_KEY_INVALID/i.test(message);
+      return fallback(expired ? 'expired' : response.status === 429 ? 'quota' : invalid || [401, 403].includes(response.status) ? 'credentials' : 'unavailable');
+    }
+    const data = await response.json();
+    const candidate = data?.candidates?.[0];
+    const reply = candidate?.content?.parts?.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
+    if (!reply || (candidate.finishReason && candidate.finishReason !== 'STOP')) return fallback();
+    return res.status(200).json({ reply, mode: 'ai' });
+  } catch (error) {
+    console.warn('Portfolio AI provider unavailable:', error?.name || 'Error');
+    return fallback();
   }
 };

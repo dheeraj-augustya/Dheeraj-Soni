@@ -1,4 +1,7 @@
-import 'dotenv/config';
+import { config } from 'dotenv';
+
+config({ path: '.env.local', quiet: true });
+config({ quiet: true });
 import express from 'express';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -9,12 +12,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
 const chatHandler = require('./api/chat.js');
+const contactHandler = require('./api/contact.js');
 
 async function startServer() {
   const app = express();
   const port = Number(process.env.PORT) || 3000;
 
   app.use(express.json({ limit: '64kb' }));
+  app.all('/api/contact', (req, res) => contactHandler(req, res));
 
   // Mount the exact same CommonJS Vercel handler for local dev / preview
   app.all('/api/chat', (req, res) => {
