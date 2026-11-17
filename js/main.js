@@ -102,11 +102,20 @@ const PROJECTS = [
     categories: ['dotnet', 'next-angular'],
     coverTheme: 'cover-theme-1',
     coverTag: 'Marketplace · .NET + Next.js + Angular',
-    summary: 'An on-demand home-services marketplace similar to Urban Company.',
+    summary: 'A home-services platform connecting service discovery, package selection and booking requests with an operations control center.',
     overview:
-      'ArivaCasa is an on-demand home-services marketplace similar to Urban Company, built to connect customers with home-service providers alongside dedicated administrative operations.',
+      'ArivaCasa connects a customer-facing home-services marketplace with an administrative control center. The supplied customer screens, branded Rapid Help, show service discovery, AC service listings, package selection, a cart and booking-request progress. The Ariva Casa admin screens show operational summaries and payroll management.',
     stack: ['.NET Web API', 'Next.js', 'Angular Admin Panel', 'SQL Server', 'Entity Framework Core'],
     role: 'Full Stack Developer at Glidedmatrix Technologies — engineered backend .NET Web APIs, customer-facing Next.js experiences, and Angular admin panel modules.',
+    screenshots: [
+      { file: 'home', title: 'Discover home services', caption: 'Customer home screen with location selection, service search and categories such as AC repairs, cleaning and home help.' },
+      { file: 'services', title: 'Compare service options', caption: 'AC installation and uninstallation listings with service information, booking options and an adjacent cart.' },
+      { file: 'packages', title: 'Choose a package', caption: 'Gas-refill package selection with Essential, Standard and Advanced options, followed by Add to cart or Continue.' },
+      { file: 'cart', title: 'Review the cart', caption: 'VRF system service listings alongside item quantities, a subtotal and the Continue action.' },
+      { file: 'bookings', title: 'Track booking requests', caption: 'A booking-request view showing the request, price proposal, confirmation and payment stages.' },
+      { file: 'dashboard', title: 'Monitor operations', caption: 'Ariva Casa control center with summaries for bookings, workers, customers, revenue, complaints and stock. Values shown are from the supplied capture.' },
+      { file: 'payroll', title: 'Manage payroll', caption: 'Payroll management screen with summary cards, search, filters, export actions and a payroll table. Red annotations are part of the supplied screenshot.' },
+    ],
   },
   {
     id: 'solarcrm',
@@ -123,16 +132,24 @@ const PROJECTS = [
   },
   {
     id: 'missalrecord',
-    title: 'MissalRecord',
+    title: 'Record Room · MissalRecord',
     company: 'Glidedmatrix Technologies',
     categories: ['dotnet', 'next-angular'],
     coverTheme: 'cover-theme-3',
     coverTag: 'GovTech · Government of Chhattisgarh',
-    summary: 'A Government of Chhattisgarh project built on .NET Web API, Next.js, and Angular.',
+    summary: 'A bilingual citizen-services portal for District Administration Korba, guiding visitors from record selection to scanned-document viewing.',
     overview:
-      'MissalRecord is a Government of Chhattisgarh project delivered with a structured backend API, public/user frontend, and administrative control panel.',
+      'Record Room (MissalRecord) is a Government of Chhattisgarh project for District Administration Korba. The supplied screens show a citizen-services portal with English and Hindi controls and a guided Record Room journey: choose a service, choose a record type, select the administrative location, search, and view a document. Record types shown include Record of Rights, Mutation Register, Settlement Missal and Revenue Case File. The document preview includes zoom, print and download controls.',
     stack: ['.NET Web API', 'Next.js', 'Angular Admin Panel', 'Clean Architecture', 'SQL Server'],
     role: 'Full Stack Developer at Glidedmatrix Technologies — contributed across .NET Web API services, Next.js frontend workflows, and Angular admin interfaces.',
+    galleryLabel: 'Citizen services · District Administration Korba',
+    screenshots: [
+      { file: 'portal', title: 'A gateway to district records', caption: 'The District Administration Korba homepage introduces revenue information and citizen services, with English and Hindi language controls.' },
+      { file: 'service', title: 'Choose the Record Room service', caption: 'The quick guide begins with service selection, highlighting Korba Record Room among the public-service options.' },
+      { file: 'record-type', title: 'Choose a record type', caption: 'The guide presents Record of Rights, Mutation Register, Settlement Missal and Revenue Case File as record types.' },
+      { file: 'location', title: 'Find the right location', caption: 'The location step follows Tehsil, Revenue Inspector Circle, Patwari Halka and Village selections.' },
+      { file: 'document', title: 'View a scanned document', caption: 'The final guide screen demonstrates a scanned-document viewer with zoom, print and download controls. The displayed record is marked as a demo.' },
+    ],
   },
   {
     id: 'temple-inventory',
@@ -141,11 +158,24 @@ const PROJECTS = [
     categories: ['dotnet'],
     coverTheme: 'cover-theme-4',
     coverTag: 'Management System · .NET',
-    summary: 'Full temple management and inventory system built for Jagannath Temple.',
+    summary: 'An inventory workspace for Jagannath Temple covering stock movements, low-stock alerts, correction approvals and master data.',
     overview:
-      'A dedicated temple management and inventory application built on .NET for organizing operations and tracking inventory items for Jagannath Temple.',
+      'A .NET inventory management application for Jagannath Temple. The dashboard presents item totals, stock alerts and store status. Operational screens cover inward entries, outward issuance to temple departments, and stock-correction requests with review and approval. Master-setup screens organize items, locations, categories, measurement units, vendors and users. The supplied captures also show search, date filtering and PDF export actions for stock workflows.',
     stack: ['.NET', 'C#', 'ASP.NET Core', 'Entity Framework Core', 'SQL Server'],
     role: 'Full Stack Developer at BTJ Alpha Technology — built core .NET application modules for temple management and inventory tracking.',
+    galleryLabel: 'Jagannath Temple · Inventory operations',
+    screenshots: [
+      { file: 'dashboard', title: 'Inventory at a glance', caption: 'Dashboard with product totals, stock alerts, active storefronts and location status. Figures reflect the supplied capture, rather than project performance metrics.' },
+      { file: 'items', title: 'Organize the item catalog', caption: 'Item records show item numbers, names, categories and base units, with search, add and edit controls.' },
+      { file: 'inflows', title: 'Track inward stock', caption: 'Inward entries list invoice references, vendors, received dates and recipients, alongside date filters, search and PDF export.' },
+      { file: 'issuance', title: 'Manage stock issuance', caption: 'Outward stock records track destination locations, recipients, issue dates and item counts for temple departments.' },
+      { file: 'adjustments', title: 'Review stock corrections', caption: 'The correction queue presents transaction references, requesters and pending or approved statuses with a Review & Approve action.' },
+      { file: 'locations', title: 'Maintain store locations', caption: 'Location master data organizes stores and kitchens with descriptions, operational statuses and editing controls.' },
+      { file: 'categories', title: 'Group inventory categories', caption: 'Category setup organizes inventory groups such as groceries, ingredients, pooja items and stationery.' },
+      { file: 'units', title: 'Define measurement units', caption: 'Unit setup lists inventory units and abbreviations, including bags, bottles, grams, kilograms and dozens.' },
+      { file: 'vendors', title: 'Manage vendor records', caption: 'The vendor directory includes contact information, stock delivery days and active statuses, with search and pagination.' },
+      { file: 'users', title: 'Organize users and roles', caption: 'User management presents account records and roles such as Store Manager, Store User, Administrator and Super Administrator.' },
+    ],
   },
   {
     id: 'hardware-inventory',
@@ -404,17 +434,6 @@ function renderSkills() {
   }
 }
 
-function updateFilterCounts() {
-  document.querySelectorAll('[data-filter-count]').forEach((el) => {
-    const key = el.dataset.filterCount;
-    const count =
-      key === 'all'
-        ? PROJECTS.length
-        : PROJECTS.filter((p) => p.categories.includes(key)).length;
-    el.textContent = padTwo(count);
-  });
-}
-
 function renderProjects(filter = 'all') {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
@@ -438,21 +457,27 @@ function renderProjects(filter = 'all') {
 
       return `
       <article class="project-card glass-card fade-up" data-project-id="${project.id}">
-        <div class="project-cover ${project.coverTheme}">
-          ${createSvgPattern(index)}
-          <span class="project-cover-index numeral">${padTwo(globalIndex)}</span>
-          <span class="project-cover-label">${project.coverTag}</span>
+        <div class="project-media">
+          <div class="project-cover ${project.coverTheme} ${project.screenshots ? 'project-cover-with-image' : ''}">
+            ${project.screenshots ? `<div class="project-slide-track">${project.screenshots.map((shot, i) => `<img class="project-cover-image" src="/assets/projects/${project.id}/${shot.file}.png" alt="${project.title}: ${shot.title}" loading="lazy" width="1178" height="526" aria-hidden="${i !== 0}">`).join('')}</div>` : createSvgPattern(index)}
+            ${!project.screenshots ? `<span class="project-cover-label">${project.coverTag}</span>` : ''}
+          </div>
+          <div class="project-preview-bar">
+            <span class="project-preview-type">${project.screenshots ? 'Product walkthrough' : 'Project overview'}</span>
+            ${project.screenshots ? `<div class="project-slide-controls"><button type="button" data-slide-prev aria-label="Previous ${project.title} preview">←</button><span class="project-slide-count">1 / ${project.screenshots.length}</span><button type="button" data-slide-next aria-label="Next ${project.title} preview">→</button><button type="button" data-slide-pause aria-pressed="false" aria-label="Pause ${project.title} slideshow">Ⅱ</button></div>` : `<span class="project-preview-type">${padTwo(globalIndex)}</span>`}
+          </div>
         </div>
         <div class="project-body">
           <p class="project-meta">${project.company}</p>
           <h3 class="project-title">${project.title}</h3>
           <p class="project-summary">${project.summary}</p>
-          <p class="project-stack-line">${project.stack.join(' · ')}</p>
+          <div class="project-stack-line">${project.stack.map(tech => `<span class="project-tech">${tech}</span>`).join('')}</div>
           <div class="project-actions">
             <button type="button" class="project-btn" data-open-modal="${project.id}">
-              <span>Details</span>
+              <span>${project.screenshots ? 'View case study' : 'View project'}</span><span aria-hidden="true">↗</span>
             </button>
             ${visitButton}
+            ${project.screenshots ? `<span class="project-screen-count">${project.screenshots.length} screens</span>` : ''}
           </div>
         </div>
       </article>
@@ -460,8 +485,117 @@ function renderProjects(filter = 'all') {
     })
     .join('');
 
-  attachProjectTilt();
   attachModalTriggers();
+  attachProjectSlides();
+}
+
+function initFeaturedJourneys() {
+  const section = document.getElementById('featured-journeys');
+  const track = document.getElementById('journeys-track');
+  if (!section || !track) return;
+  const featured = ['temple-inventory', 'arivacasa', 'missalrecord', 'solarcrm', 'hardware-inventory', 'workzen-manpower-app'].map(id => PROJECTS.find(project => project.id === id));
+  const labels = [
+    { code: 'INV', name: 'Temple Inventory', category: 'Inventory & operations', detail: 'Stock in. Clarity out.', route: 'STORE → SERVICE', accent: 'temple' },
+    { code: 'AC', name: 'ArivaCasa', category: 'Home-services marketplace', detail: 'From discovery to doorstep.', route: 'DISCOVER → BOOK', accent: 'ariva' },
+    { code: 'RR', name: 'Record Room', category: 'Digital citizen services', detail: 'Public records. Clear journeys.', route: 'SEARCH → RECORD', accent: 'records' },
+    { code: 'SOL', name: 'SolarCRM', detail: 'Clarity for solar operations.', route: 'INQUIRY → WORKFLOW', accent: 'solar' },
+    { code: 'HW', name: 'Hardware Inventory', detail: 'Keep everyday stock in order.', route: 'ITEM → INVENTORY', accent: 'hardware' },
+    { code: 'WZ', name: 'Workzen Manpower', detail: 'Coordinating people across borders.', route: 'RECRUIT → DEPLOY', accent: 'workzen' },
+  ];
+  track.innerHTML = featured.map((project, index) => {
+    const label = labels[index];
+    return `<article class="project-ticket ticket-${label.accent}" aria-roledescription="slide" aria-label="${label.name}">
+      <button type="button" class="ticket-main" aria-label="Explore ${label.name} case study">
+        <span class="ticket-image ${!project.screenshots ? 'ticket-image-illustrated' : ''}">${project.screenshots ? `<img src="/assets/projects/${project.id}/${project.screenshots[0].file}.png" alt="" loading="lazy" width="200" height="250">` : `<span class="ticket-monogram" aria-hidden="true">${label.code}</span>`}<span class="ticket-image-code">${label.code}</span></span>
+        <span class="ticket-content"><span class="ticket-eyebrow">PROJECT PASS <span>${label.code}</span></span><span class="ticket-title">${label.name}</span><span class="ticket-description">${label.detail}</span><span class="ticket-route">${label.route}</span></span>
+      </button>
+      <button type="button" class="ticket-stub" aria-label="Open ${label.name} project details"><span class="ticket-barcode" aria-hidden="true"></span><span>EXPLORE</span><span class="ticket-arrow" aria-hidden="true">↗</span></button>
+    </article>`;
+  }).join('');
+  [...track.children].forEach((ticket, index) => ticket.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => { lastModalTrigger = button; openProjectModal(featured[index].id); });
+  }));
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = motion.matches;
+  let visible = false;
+  const pause = document.getElementById('journeys-pause');
+  const updatePause = () => {
+    pause.textContent = paused ? '▶' : 'Ⅱ';
+    pause.setAttribute('aria-pressed', String(paused));
+    pause.setAttribute('aria-label', paused ? 'Play featured project slideshow' : 'Pause featured project slideshow');
+  };
+  pause.addEventListener('click', () => { paused = !paused; updatePause(); });
+  motion.addEventListener('change', () => { if (motion.matches) { paused = true; updatePause(); } });
+  updatePause();
+  function move(direction) {
+    const cards = [...track.children];
+    const max = track.scrollWidth - track.clientWidth;
+    const step = cards[1].offsetLeft - cards[0].offsetLeft;
+    const next = direction > 0 ? (track.scrollLeft >= max - 2 ? 0 : Math.min(max, track.scrollLeft + step))
+      : (track.scrollLeft <= 2 ? max : Math.max(0, track.scrollLeft - step));
+    track.scrollTo({ left: next, behavior: motion.matches ? 'auto' : 'smooth' });
+  }
+  document.getElementById('journeys-prev').addEventListener('click', () => move(-1));
+  document.getElementById('journeys-next').addEventListener('click', () => move(1));
+  track.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') { event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1); }
+  });
+  const timer = window.setInterval(() => {
+    if (visible && !paused && !document.hidden && document.getElementById('project-modal').hidden && !section.matches(':hover, :focus-within')) move(1);
+  }, 5500);
+  let accentStarted = false;
+  const observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    const constrained = navigator.connection?.saveData || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+    if (visible && !accentStarted && !motion.matches && !constrained && innerWidth >= 768) {
+      accentStarted = true;
+      import('./ticket-scene.js').then(({ initTicketAccent }) => initTicketAccent(document.getElementById('journeys-accent'), section)).catch(() => {});
+    }
+  }, { threshold: .1 });
+  observer.observe(section);
+  window.addEventListener('pagehide', () => { clearInterval(timer); observer.disconnect(); }, { once: true });
+}
+
+let disposeProjectSlides = () => {};
+function attachProjectSlides() {
+  disposeProjectSlides();
+  const slideshows = [];
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    const state = slideshows.find(item => item.card === entry.target);
+    if (state) state.visible = entry.isIntersecting;
+  }));
+  document.querySelectorAll('.project-media:has(.project-cover-with-image)').forEach(cover => {
+    const card = cover.closest('.project-card');
+    const track = cover.querySelector('.project-slide-track');
+    const images = [...track.children];
+    const state = { card, selected: 0, paused: prefersReducedMotion(), visible: false };
+    const show = index => {
+      state.selected = (index + images.length) % images.length;
+      track.style.transform = `translateX(-${state.selected * 100}%)`;
+      images.forEach((image, i) => image.setAttribute('aria-hidden', String(i !== state.selected)));
+      cover.querySelector('.project-slide-count').textContent = `${state.selected + 1} / ${images.length}`;
+    };
+    state.next = () => show(state.selected + 1);
+    cover.querySelector('[data-slide-prev]').addEventListener('click', () => show(state.selected - 1));
+    cover.querySelector('[data-slide-next]').addEventListener('click', state.next);
+    const pause = cover.querySelector('[data-slide-pause]');
+    const updatePause = () => {
+      pause.setAttribute('aria-pressed', String(state.paused));
+      pause.setAttribute('aria-label', `${state.paused ? 'Play' : 'Pause'} project slideshow`);
+      pause.textContent = state.paused ? '▶' : 'Ⅱ';
+    };
+    pause.addEventListener('click', () => { state.paused = !state.paused; updatePause(); });
+    updatePause();
+    slideshows.push(state);
+    observer.observe(card);
+  });
+  const timer = window.setInterval(() => {
+    if (document.hidden || !document.getElementById('project-modal').hidden) return;
+    slideshows.forEach(state => {
+      if (state.visible && !state.paused && !state.card.matches(':hover, :focus-within')) state.next();
+    });
+  }, 5500);
+  disposeProjectSlides = () => { clearInterval(timer); observer.disconnect(); };
 }
 
 function renderAcademicProjects() {
@@ -536,7 +670,6 @@ function renderCareer() {
    ========================================================================== */
 
 function initProjectFilters() {
-  updateFilterCounts();
   const tabs = document.querySelectorAll('.filter-tab');
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -585,6 +718,11 @@ function openProjectModal(projectId) {
   const coverEl = document.getElementById('modal-cover');
   coverEl.className = `modal-cover ${project.coverTheme}`;
   coverEl.innerHTML = createSvgPattern(PROJECTS.indexOf(project));
+  const existingGallery = document.getElementById('project-gallery');
+  existingGallery?.remove();
+  modal.classList.toggle('has-project-gallery', Boolean(project.screenshots));
+  coverEl.hidden = Boolean(project.screenshots);
+  if (project.screenshots) renderProjectGallery(project, coverEl);
 
   const stackEl = document.getElementById('modal-stack');
   stackEl.innerHTML = project.stack
@@ -607,8 +745,62 @@ function openProjectModal(projectId) {
   }
 
   modal.hidden = false;
+  modal.querySelector('.modal-dialog').scrollTop = 0;
   document.body.style.overflow = 'hidden';
   document.getElementById('modal-close').focus();
+}
+
+function renderProjectGallery(project, coverEl) {
+  const gallery = document.createElement('section');
+  gallery.id = 'project-gallery';
+  gallery.className = 'project-gallery';
+  gallery.style.setProperty('--gallery-columns', String(project.screenshots.length > 7 ? 5 : project.screenshots.length));
+  gallery.setAttribute('aria-label', `${project.title} screenshots`);
+  gallery.innerHTML = `
+    <div class="gallery-heading"><span>Product walkthrough</span><span>${project.galleryLabel || 'Customer experience + admin operations'}</span></div>
+    <figure class="gallery-figure">
+      <a class="gallery-fullsize" target="_blank" rel="noopener noreferrer" aria-label="Open selected screenshot at full size"><img class="gallery-image" width="1178" height="526" alt=""></a>
+      <figcaption><div class="gallery-caption-title"></div><p class="gallery-caption-text"></p></figcaption>
+    </figure>
+    <div class="gallery-controls"><button type="button" class="project-btn gallery-prev" aria-label="Previous screenshot">← Previous</button><span class="gallery-counter" role="status"></span><button type="button" class="project-btn gallery-next" aria-label="Next screenshot">Next →</button></div>
+    <div class="gallery-thumbnails" role="group" aria-label="Choose a project screenshot"></div>`;
+  const thumbnails = gallery.querySelector('.gallery-thumbnails');
+  let selected = 0;
+  function select(index) {
+    selected = (index + project.screenshots.length) % project.screenshots.length;
+    const shot = project.screenshots[selected];
+    const path = `/assets/projects/${project.id}/${shot.file}.png`;
+    const image = gallery.querySelector('.gallery-image');
+    image.src = path;
+    image.classList.remove('is-changing');
+    void image.offsetWidth;
+    image.classList.add('is-changing');
+    image.alt = `${shot.title}. ${shot.caption}`;
+    gallery.querySelector('.gallery-fullsize').href = path;
+    gallery.querySelector('.gallery-caption-title').textContent = shot.title;
+    gallery.querySelector('.gallery-caption-text').textContent = shot.caption;
+    gallery.querySelector('.gallery-counter').textContent = `${selected + 1} / ${project.screenshots.length}`;
+    [...thumbnails.children].forEach((button, i) => button.setAttribute('aria-pressed', String(i === selected)));
+  }
+  project.screenshots.forEach((shot, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'gallery-thumb';
+    button.setAttribute('aria-label', `Show screenshot ${index + 1}: ${shot.title}`);
+    button.innerHTML = `<img src="/assets/projects/${project.id}/${shot.file}.png" alt="" loading="lazy" width="160" height="90"><span>${shot.title}</span>`;
+    button.addEventListener('click', () => select(index));
+    thumbnails.appendChild(button);
+  });
+  gallery.querySelector('.gallery-prev').addEventListener('click', () => select(selected - 1));
+  gallery.querySelector('.gallery-next').addEventListener('click', () => select(selected + 1));
+  gallery.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      select(selected + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+  coverEl.after(gallery);
+  select(0);
 }
 
 function closeProjectModal() {
@@ -640,6 +832,13 @@ function initModalEvents() {
     if (e.target === modal) closeProjectModal();
   });
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && !modal.hidden) {
+      const focusable = [...modal.querySelectorAll('button, a[href], [tabindex="0"]')].filter(el => !el.disabled && el.getClientRects().length);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+    }
     if (e.key === 'Escape' && !modal.hidden) {
       closeProjectModal();
     }
@@ -765,24 +964,42 @@ function initCustomCursor() {
   window.addEventListener('beforeunload', () => cancelAnimationFrame(rafId));
 }
 
-function initMagneticButtons() {
-  if (!isFinePointerDesktop() || prefersReducedMotion()) return;
-  document.querySelectorAll('.magnetic-btn').forEach((btn) => {
-    btn.addEventListener('pointermove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.22;
-      const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.22;
-      btn.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
-    });
-    btn.addEventListener('pointerleave', () => {
-      btn.style.transform = '';
-    });
-  });
-}
-
 /* ==========================================================================
    SCROLL-SPY (DESKTOP PILL + MOBILE BOTTOM TAB BAR)
    ========================================================================== */
+
+function initSectionNavigation() {
+  function scrollToSection(hash, smooth = true) {
+    let target;
+    try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch { return; }
+    if (!target) return;
+    history.replaceState(history.state, '', location.pathname + location.search);
+    target.scrollIntoView({ behavior: smooth && !prefersReducedMotion() ? 'smooth' : 'auto', block: 'start' });
+    return target;
+  }
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || link.getAttribute('href').length < 2) return;
+    const hash = link.getAttribute('href');
+    let target;
+    try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch { return; }
+    if (!target) return;
+    event.preventDefault();
+    scrollToSection(hash);
+    if (event.detail === 0) {
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    }
+  });
+  if (location.hash) {
+    const hash = location.hash;
+    history.replaceState(history.state, '', location.pathname + location.search);
+    if (document.readyState === 'complete') scrollToSection(hash, false);
+    else window.addEventListener('load', () => scrollToSection(hash, false), { once: true });
+  }
+  window.addEventListener('hashchange', () => { if (location.hash) scrollToSection(location.hash); });
+}
 
 function initScrollSpy() {
   const desktopLinks = document.querySelectorAll('.nav-link[data-spy]');
@@ -1000,6 +1217,7 @@ function initContactForm() {
     errorEmail.textContent = '';
     errorMessage.textContent = '';
     statusEl.textContent = '';
+    statusEl.dataset.state = '';
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -1021,24 +1239,56 @@ function initContactForm() {
 
     if (!valid) return;
 
-    /*
-      OPTIONAL FORM SERVICE INTEGRATION (Formspree / Web3Forms):
-      To send directly without opening the visitor's email client, replace the
-      mailto fallback below with:
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+    const button = document.getElementById('contact-submit');
+    if (button.disabled) return;
+    const label = button.querySelector('span');
+    button.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    label.textContent = 'Sending…';
+    statusEl.textContent = 'Sending your message…';
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, website: document.getElementById('contact-website').value }),
+        signal: controller.signal,
       });
-    */
-
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:dheerajsoni.dev@gmail.com?subject=${subject}&body=${body}`;
-
-    statusEl.textContent =
-      'Thanks! Your email app should open with your message ready to send to dheerajsoni.dev@gmail.com.';
-    form.reset();
+      const data = await response.json().catch(() => null);
+      if (response.ok && data?.delivery === 'browser') {
+        const action = new URL(data.action);
+        if (action.origin !== 'https://formsubmit.co') throw new Error('Invalid contact service address.');
+        const deliveryForm = document.createElement('form');
+        deliveryForm.method = 'POST';
+        deliveryForm.action = action.href;
+        const fields = { name, email, message, _replyto: email, _subject: 'Portfolio inquiry: ' + name, _template: 'table', _captcha: 'false', _honey: '' };
+        Object.entries(fields).forEach(([key, value]) => {
+          const field = document.createElement('input');
+          field.type = 'hidden'; field.name = key; field.value = value;
+          deliveryForm.appendChild(field);
+        });
+        document.body.appendChild(deliveryForm);
+        statusEl.textContent = 'Opening the secure submission confirmation…';
+        deliveryForm.submit();
+        return;
+      }
+      if (!response.ok || !data?.message) throw new Error(data?.error || (response.status === 404
+        ? 'The contact endpoint is unavailable. Please refresh the page and try again, or email dheerajsoni.dev@gmail.com.'
+        : 'Unable to submit your message. Please try again or email dheerajsoni.dev@gmail.com.'));
+      statusEl.textContent = data.message;
+      statusEl.dataset.state = 'success';
+      form.reset();
+    } catch (error) {
+      statusEl.textContent = error.name === 'AbortError'
+        ? 'The request timed out. Your message may have been submitted; please wait before trying again, or email dheerajsoni.dev@gmail.com.'
+        : error.message || 'Unable to submit your message. Please try again.';
+      statusEl.dataset.state = 'error';
+    } finally {
+      clearTimeout(timeout);
+      button.disabled = false;
+      label.textContent = 'Send Message';
+      form.removeAttribute('aria-busy');
+    }
   });
 }
 
@@ -1068,14 +1318,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   renderSkills();
   renderProjects('all');
+  initFeaturedJourneys();
   renderAcademicProjects();
   renderCareer();
   initProjectFilters();
   initModalEvents();
   initRotatingRole();
   initCustomCursor();
-  initMagneticButtons();
   initScrollSpy();
+  initSectionNavigation();
   initContactForm();
   initFooter();
   initAnimations();

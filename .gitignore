@@ -3,6 +3,11 @@ build/
 dist/
 coverage/
 .vercel/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 .DS_Store
 *.log
 .env
